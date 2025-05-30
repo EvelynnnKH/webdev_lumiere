@@ -164,100 +164,196 @@ class ShopController extends Controller
         return redirect(route('product'))->with('success', 'Product berhasil dihapus!');
     }
 
-
-    // add
-    public function addToCart(Request $request, $id)
+    // ADD TO CART
+    public function addToCart(Request $request, Product $product)
     {
-        $product = Product::where('product_id', $id)->first();
-
-        if (!$product) {
-            return redirect()->back()->with('error', 'Product not found!');
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login untuk menambahkan ke keranjang.');
         }
 
-        $quantity = $request->input('quantity', 1); // Default quantity is 1 if not provided
-        $cart = session()->get('cart', []);
+        $userId = Auth::id();
+        $quantity = $request->input('quantity', 1);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $quantity;  // Increment quantity by the requested amount
+        $cart = Cart::firstOrCreate(
+            ['user_id' => $userId]
+        );
+
+        $cartItem = $cart->cartItems()
+                         ->where('product_id', $product->product_id)
+                         ->active()
+                         ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += $quantity;
+            $cartItem->save();
+            $message = 'Kuantitas produk di keranjang berhasil diperbarui!';
         } else {
-            $cart[$id] = [
-                "name" => $product->name,
-                "quantity" => $quantity,
-                "price" => $product->price,
-                "image_url" => $product->image_url
-            ];
+            CartItem::create([
+                'cart_id' => $cart->cart_id,
+                'product_id' => $product->product_id,
+                'quantity' => $quantity,
+                'status_del' => false, 
+            ]);
+            $message = 'Produk berhasil ditambahkan ke keranjang!';
         }
 
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart!');
+        return redirect()->back()->with('success', $message);
     }
-    // delete
-    public function removeFromCart($id)
-    {
-        $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang!');
+    // REMOVE FROM CART
+    public function removeFromCart(Product $product)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login untuk menghapus dari keranjang.');
         }
 
-        return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
+        $userId = Auth::id();
+        $cart = Cart::where('user_id', $userId)->first();
+
+        if ($cart) {
+            $cartItem = $cart->cartItems()
+                             ->where('product_id', $product->product_id)
+                             ->active()
+                             ->first();
+
+            if ($cartItem) {
+                $cartItem->status_del = true;
+                $cartItem->save();
+
+                return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang!');
+            }
+        }
+        return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang Anda.');
     }
 
-    public function viewCart()
+    // VIEW FOR CART
+    public function cart()
     {
-        dd(session()->get('cart'));
-        $cart = session()->get('cart', []);
-        return view('cart.index', compact('cart'));
-    }
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk melihat keranjang Anda.');
+        }
 
-    // munculin cart
-    public function cart(){
-        //dd("test");
-        $cart = session()->get('cart',[]);
+        $cart = Cart::where('user_id', Auth::id())
+                    ->with(['cartItems' => function ($query) {
+                        $query->active()->with('product');
+                    }])
+                    ->first();
+        
+        if (!$cart) {
+            $cart = (object)['cartItems' => collect()];
+        }
+
         return view('cart', compact('cart'));
     }
 
-    // add wishlist
-    public function addToWishlist(Request $request, $id)
+    // UPDATE CART ITEM
+    public function updateCartItem(Request $request, $productId)
     {
-        $product = Product::where('product_id', $id)->first();
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
 
-        if (!$product) {
-            return redirect()->back()->with('error', 'Product not found!');
+        $userId = Auth::check() ? Auth::id() : null;
+        $cart = Cart::where('user_id', $userId)->first();
+
+        if ($cart) {
+            $item = CartItem::where('cart_id', $cart->cart_id)
+                            ->where('product_id', $productId)
+                            ->first();
+
+            if ($item) {
+                $item->quantity = $request->quantity;
+                $item->save();
+            }
         }
 
-        $wishlist = session()->get('wishlist', []);
+        return redirect()->back()->with('success', 'Jumlah produk diperbarui.');
+    }
 
-        if (isset($wishlist[$id])) {
-            return redirect()->back()->with('success', 'Product is already in your wishlist!');
+    // REMOVE CART ITEM
+    public function removeItem($id)
+    {
+        $cartItem = CartItem::find($id);
+
+            if ($cartItem) {
+                $cartItem->status_del = true;
+                $cartItem->save();
+            }
+
+            return redirect()->back()->with('success', 'Item berhasil dihapus (soft delete).');
+    }
+
+    // ADD TO WISHLIST
+    public function addToWishlist(Request $request, $product_id)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login untuk menambahkan ke wishlist.');
         }
 
-        $wishlist[$id] = [
-            "name" => $product->name,
-            "price" => $product->price,
-            "image_url" => $product->image_url
-        ];
+        $product = Product::findOrFail($product_id);
+        $userId = Auth::id();
+        $quantity = $request->input('quantity', 1);
 
-        session()->put('wishlist', $wishlist);
+        $wishlist = Wishlist::firstOrCreate(
+            ['user_id' => $userId],
+            ['status_del' => false]
+        );
 
-        return redirect()->back()->with('success', 'Product added to wishlist!');
+        $existingWishlistItem = $wishlist->wishlistItems()
+                                        ->where('product_id', $product->product_id)
+                                        ->first();
+
+        if ($existingWishlistItem) {
+            return redirect()->back()->with('info', 'Produk ini sudah ada di wishlist Anda.');
+        } else {
+            WishlistItem::create([
+                'wishlist_id' => $wishlist->wishlist_id,
+                'product_id' => $product->product_id,
+                'quantity' => $quantity,
+                'status_del' => false,
+            ]);
+            return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke wishlist!');
+        }
     }
 
-    // remove from wishlist
-    public function removeFromWishlist($id)
+    // REMOVE FROM WISHLIST
+    public function removeFromWishlist($product_id)
     {
-        $wishlist = session()->get('wishlist', []);
-        unset($wishlist[$id]);
-        session()->put('wishlist', $wishlist);
-        return redirect()->back()->with('success', 'Product successfully deleted from wishlist!');
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login untuk menghapus dari wishlist.');
+        }
+
+        $userId = Auth::id();
+        $wishlist = Wishlist::where('user_id', $userId)->first();
+
+        if ($wishlist) {
+            $wishlistItem = $wishlist->wishlistItems()
+                                        ->where('product_id', $product_id)
+                                        ->first();
+            if ($wishlistItem) {
+                $wishlistItem->status_del = true;
+                $wishlistItem->save();
+                return redirect()->back()->with('success', 'Produk berhasil dihapus dari wishlist!');
+            }
+        }
+        return redirect()->back()->with('error', 'Produk tidak ditemukan di wishlist Anda.');
     }
 
-    // wishlist
+    // VIEW FOR WISHLIST
     public function wishlist()
     {
-        $wishlist = session()->get('wishlist', []);
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk melihat wishlist Anda.');
+        }
+
+        $wishlist = Wishlist::where('user_id', Auth::id())
+                            ->with(['wishlistItems.product'])
+                            ->first();
+
+        if (!$wishlist) {
+            $wishlist = (object)['wishlistItems' => collect()];
+        }
+
         return view('wishlist', compact('wishlist'));
     }
 }
