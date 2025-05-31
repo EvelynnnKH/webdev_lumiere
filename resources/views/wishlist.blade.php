@@ -17,7 +17,7 @@
     .page-title:after{
         left: 46.5%;
     }
-    body {  background-color: #f8f4ee; }
+    body { background-color: #f8f4ee; }
     main {
         background-color: #f8f4ee;
     }
@@ -27,28 +27,29 @@
 <div class="container py-5" style="font-family: 'Playfair Display'; background-color: #f8f4ee;">
     <h2 class="mb-5 text-center fw-bold pb-2 page-title">Wishlist</h2>
 
-    @if(is_array($wishlist) && count($wishlist) > 0)
+    {{-- Perubahan utama ada di sini --}}
+    @if($wishlist && $wishlist->wishlistItems->count() > 0)
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach ($wishlist as $id => $item)
+            @foreach ($wishlist->wishlistItems as $item) {{-- Loop melalui wishlistItems --}}
                 <div class="col">
                     <div class="card h-100 shadow-sm border-0">
-                        <img src="{{  asset('productimages/'.$item['image_url']) }}" 
+                        <img src="{{ asset('productimages/'.$item->product->image_url) }}" {{-- Akses melalui $item->product --}}
                              class="card-img-top" 
-                             alt="{{ $item['name'] }}" 
+                             alt="{{ $item->product->name }}" 
                              style="height: 250px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-semibold">{{ $item['name'] }}</h5>
-                            <p class="card-text text-muted mb-4">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
+                            <h5 class="card-title fw-semibold">{{ $item->product->name }}</h5>
+                            <p class="card-text text-muted mb-4">Rp {{ number_format($item->product->price, 0, ',', '.') }}</p>
                             <div class="mt-auto d-flex justify-content-between">
                                 {{-- Add to Cart --}}
-                                <form action="{{ route('add_to_cart', $id) }}" method="POST">
+                                <form action="{{ route('add_to_cart', ['product' => $item->product->product_id]) }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="quantity" value="{{ $item->quantity }}"> {{-- Gunakan quantity dari item wishlist --}}
                                     <button class="btn btn-dark btn-sm">Add to Cart</button>
                                 </form>
 
                                 {{-- Remove from Wishlist --}}
-                                <form action="{{ route('remove_from_wishlist', $id) }}" method="POST">
+                                <form action="{{ route('remove_from_wishlist', ['product_id' => $item->product->product_id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-danger btn-sm">Remove</button>
@@ -60,7 +61,8 @@
             @endforeach
         </div>
     @else
-        <p class="text-center text-muted fs-5">Your cart is empty</p>
+        <p class="text-center text-muted fs-5">Wishlist Anda kosong.</p> {{-- Pesan lebih akurat --}}
+        <a href="{{ route('product') }}" class="btn btn-primary">Lanjutkan Belanja</a>
     @endif
 </div>
 @endsection

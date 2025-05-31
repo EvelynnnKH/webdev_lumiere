@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CartItem extends Model
+class WishlistItem extends Model
 {
     //
     use HasFactory;
 
     protected $fillable = [
-        'cart_id',
+        'wishlist_id',
         'product_id',
         'quantity',
         'status_del',
@@ -21,11 +21,15 @@ class CartItem extends Model
         'status_del' => 'boolean',
     ];
 
-    protected $primaryKey = 'cart_item_id';
+    protected $primaryKey = 'wishlist_item_id';
 
-    public function cart()
+    protected $keyType = 'int';
+
+    public $incrementing = true;
+
+    public function wishlist()
     {
-        return $this->belongsTo(Cart::class, 'cart_id', 'cart_id');
+        return $this->belongsTo(Wishlist::class, 'wishlist_id', 'wishlist_id');
     }
 
     public function product()

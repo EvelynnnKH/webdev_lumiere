@@ -69,11 +69,21 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/view-cart', [ShopController::class, 'cart'])
         ->name('view_cart');
 
-        Route::post('/add-to-cart/{product:id}', [ShopController::class, 'addToCart'])
+        Route::middleware('auth')->group(function () {
+            Route::get('/cart', [ShopController::class, 'viewCart'])->name('cart.index');
+        });
+
+        Route::post('/add-to-cart/{product}', [ShopController::class, 'addToCart'])
         ->name('add_to_cart');
 
-        Route::delete('/delete-cart/{product:id}', [ShopController::class, 'removeFromCart'])
+        Route::delete('/delete-cart/{product}', [ShopController::class, 'removeFromCart'])
         ->name('remove_from_cart');
+
+        Route::post('/update-cart/{product}', [ShopController::class, 'updateCartItem'])
+        ->name('update_cart_item');
+
+        Route::delete('/cart/remove/{id}', [ShopController::class, 'removeItem'])
+        ->name('cart.removeItem');
 
         Route::post('/checkout', [CheckoutController::class, 'show'])
         ->name('checkout');
