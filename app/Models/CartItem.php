@@ -14,7 +14,14 @@ class CartItem extends Model
         'cart_id',
         'product_id',
         'quantity',
+        'status_del',
     ];
+
+    protected $casts = [
+        'status_del' => 'boolean',
+    ];
+
+    protected $primaryKey = 'cart_item_id';
 
     public function cart()
     {
@@ -24,5 +31,10 @@ class CartItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status_del', false);
     }
 }
