@@ -11,6 +11,8 @@ class Cart extends Model
     use HasFactory;
     protected $primaryKey = 'cart_id';
     protected $fillable = ['user_id'];
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     public function user()
     {
@@ -19,7 +21,11 @@ class Cart extends Model
 
     public function items()
     {
-        return $this->hasMany(CartItem::class, 'cart_id', 'cart_id');
+        return $this->hasMany(CartItem::class, 'cart_id', 'cart_id')->active();
     }
     
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class, 'cart_id', 'cart_id')->active();
+    }
 }
