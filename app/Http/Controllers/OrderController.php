@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Orders;
+use App\Models\CartItem;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -140,6 +146,99 @@ public function showHistory()
         'adminCost' => $adminCost,
         'total' => $total
     ]);
+}
+
+    public function placeOrder(Request $request)
+    {
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->user_id)->with('cartItems.product')->first();
+
+        // Validate if cart exists and has items
+        if (!$cart || $cart->cartItems->isEmpty()) {
+            return redirect()->route('cart')->with('error', 'Your cart is empty');
+        }
+
+        // Validate form data
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip' => 'required|string|max:10',
+        ]);
+
+        // Calculate totals
+        $subtotal = $cart->cartItems->sum(function($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        $tax = $subtotal * 0.1; // 10% tax
+        $shipping = 20000;
+        $adminFee = 5000;
+        $total = $subtotal + $tax + $shipping + $adminFee;
+
+        // Create full shipping address
+        $shippingAddress = implode(', ', [
+            $validated['address'],
+            $validated['city'],
+            $validated['state'],
+            $validated['zip']
+        ]);
+
+        // Start transaction
+        \DB::beginTransaction();
+
+        try {
+            // Create order
+            $order = Orders::create([
+                'user_id' => $user->user_id,
+                'order_date' => now(),
+                'status' => 'pending',
+                'total_price' => $total,
+                'shipping_address' => $shippingAddress,
+                'status_del' => false
+            ]);
+
+            // Create order items
+            foreach ($cart->cartItems as $cartItem) {
+                OrderItem::create([
+                    'order_id' => $order->order_id,
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->product->price,
+                    'rating' => 0, // Default rating
+                    'status_del' => false
+                ]);
+            }
+
+            // Clear the cart
+            CartItem::where('cart_id', $cart->cart_id)->delete();
+
+            \DB::commit();
+
+            return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
+                ->with('success', 'Order placed successfully!');
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to place order. Please try again.');
+        }
+    }
+
+    public function showConfirmation($order_id)
+    {
+        $order = Orders::with('orderItems.product')->findOrFail($order_id);
+        
+        // Verify the order belongs to the authenticated user
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('confirmation', compact('order'));
+    }
 
     }  
-}
+
