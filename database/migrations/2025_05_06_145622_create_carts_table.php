@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('cart_id');
             $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->boolean('status_del')->default(false);
-            $table->timestamps();
         });
     }
 
