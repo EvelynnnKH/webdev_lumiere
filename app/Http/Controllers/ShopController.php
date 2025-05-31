@@ -361,4 +361,17 @@ class ShopController extends Controller
 
         return view('wishlist', compact('wishlist'));
     }
+
+    public function index()
+{
+    $cart = Cart::where('user_id', auth()->id())
+                ->with('cartItems.product')
+                ->first();
+    
+    $total = $cart ? $cart->cartItems->sum(function($item) {
+        return $item->product->price * $item->quantity;
+    }) : 0;
+
+    return view('cart', compact('cart', 'total'));
+}
 }
