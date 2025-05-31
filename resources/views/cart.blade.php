@@ -62,27 +62,15 @@
                 <div class="col-md-2 text-end">
                     Rp {{ number_format($subtotal, 0, ',', '.') }}
                 </div>
-
-                {{-- Remove --}}
-                <div class="col-md-1 text-end">
-                    <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Hapus item ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
-                    </form>
-                </div>
-
             </div>
         @endforeach
 
-        {{-- Total dan Checkout --}}
+        {{-- Total and Checkout --}}
         <div class="text-end mt-4">
             <div class="fw-bold mb-3">Total: Rp {{ number_format($total, 0, ',', '.') }}</div>
-            <form action="" method="POST">
-                @csrf
-                <input type="hidden" name="cart_id" value="{{ $cart->cart_id }}">
-                <button type="submit" class="btn btn-dark btn-lg" style="font-size: 14px; border-radius: 3px;">C H E C K O U T</button>
-            </form>
+            <a href="{{ route('checkout') }}" class="btn btn-dark w-100 mt-3 py-2">
+                PROCEED TO CHECKOUT
+            </a>
         </div>
     @else
         <p class="text-center text-muted fs-5">Your cart is empty</p>
