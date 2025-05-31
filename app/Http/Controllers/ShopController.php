@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
+use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\Wishlist;
+use App\Models\WishlistItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ShopController extends Controller
