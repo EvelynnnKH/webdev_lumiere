@@ -85,9 +85,6 @@ Route::middleware(['auth'])->group(function(){
         Route::delete('/cart/remove/{id}', [ShopController::class, 'removeItem'])
         ->name('cart.removeItem');
 
-        Route::post('/checkout', [CheckoutController::class, 'show'])
-        ->name('checkout');
-
         Route::get('/view-wishlist', [ShopController::class, 'wishlist'])
         ->name('view_wishlist');
 
@@ -96,6 +93,15 @@ Route::middleware(['auth'])->group(function(){
 
         Route::delete('/remove-from-wishlist/{product_id}', [ShopController::class, 'removeFromWishlist'])
         ->name('remove_from_wishlist');
+
+        Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+
+        // Orders
+
+        Route::get('/order/confirmation/{order_id}', [OrderController::class, 'showConfirmation'])->name('order.confirmation');
+
+        Route::get('/cart', [ShopController::class, 'index'])->name('cart');
     });
     
 });
