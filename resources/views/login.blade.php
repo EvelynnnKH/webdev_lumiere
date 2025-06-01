@@ -1,15 +1,17 @@
 @extends('base')
 
 @section('content')
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3" role="alert" style="min-width: 300px;">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3"
+            role="alert" style="min-width: 300px;">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3" role="alert" style="min-width: 300px;">
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3"
+            role="alert" style="min-width: 300px;">
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -25,7 +27,7 @@
 
                 <div class="card shadow-sm border-0 p-4" style="background-color: #FFF3EB; border-radius: 10px;">
                     <div class="card-body">
-                        <h2 class="text-center mb-4" style="color: #603700;">Login</h2>   
+                        <h2 class="text-center mb-4" style="color: #603700;">Login</h2>
 
                         <form method="GET" action="{{ route('home') }}">
                             <div class="mb-4">

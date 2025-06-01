@@ -10,27 +10,45 @@
                     <div class="card-body">
                         <h2 class="text-center mb-4" style="color: #603700;">Reset Password</h2>
 
+                        {{-- Show success message --}}
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        {{-- Show validation errors --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('passwordreset') }}" id="resetPasswordForm">
                             @csrf
                             <div class="mb-4">
                                 <input type="email" class="form-control border-0 border-bottom rounded-0 p-0"
                                     name="email"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter email address">
+                                    placeholder="Enter email address" required value="{{ old('email') }}">
                             </div>
 
                             <div class="mb-4">
                                 <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
                                     name="new_password"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter new password">
+                                    placeholder="Enter new password" required>
                             </div>
 
                             <div class="mb-4">
                                 <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    name="confirm_password"
+                                    name="new_password_confirmation"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Confirm new password">
+                                    placeholder="Confirm new password" required>
                             </div>
 
                             <div class="d-grid gap-2 mb-3">

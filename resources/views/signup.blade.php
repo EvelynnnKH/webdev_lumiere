@@ -12,46 +12,71 @@
 
                 <div class="card shadow-sm border-0 p-4" style="background-color: #FFF3EB; border-radius: 10px;">
                     <div class="card-body">
-                        <h2 class="text-center mb-4" style="color: #603700; font-family:'Playfair Display';">Create Account!</h2>
+                        <h2 class="text-center mb-4" style="color: #603700; font-family:'Playfair Display';">Create Account!
+                        </h2>
 
-                        <form id="signupForm">
+                        <form method="POST" action="{{ route('signup.store') }}">
+                            @csrf
+
                             <div class="mb-4">
-                                <input type="text" class="form-control border-0 border-bottom rounded-0 p-0"
+                                <input type="text" name="name"
+                                    class="form-control border-0 border-bottom rounded-0 p-0"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter your name">
+                                    placeholder="Enter your name" value="{{ old('name') }}" required>
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
-                                <input type="email" class="form-control border-0 border-bottom rounded-0 p-0"
+                                <input type="email" name="email"
+                                    class="form-control border-0 border-bottom rounded-0 p-0"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter your email">
+                                    placeholder="Enter your email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
-                                <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
+                                <input type="password" name="password"
+                                    class="form-control border-0 border-bottom rounded-0 p-0"
                                     style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter your password">
+                                    placeholder="Enter your password" required>
+                                @error('password')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <input type="password" name="password_confirmation"
+                                    class="form-control border-0 border-bottom rounded-0 p-0"
+                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
+                                    placeholder="Confirm your password" required>
                             </div>
 
                             <div class="d-grid gap-2 mb-3">
-                                <button type="button" onclick="handleSignup()" class="btn btn-block py-2"
+                                <button type="submit" class="btn btn-block py-2"
                                     style="background-color: #603700; color: white;">
                                     Create →
                                 </button>
                             </div>
                         </form>
+
+                        @if (session('success'))
+                            <div class="alert alert-success text-center" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger text-center" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-
-    <script>
-        function handleSignup() {
-            setTimeout(() => {
-                window.location.href = "{{ route('login') }}";
-            }, 500);
-        }
-    </script>
 @endsection
