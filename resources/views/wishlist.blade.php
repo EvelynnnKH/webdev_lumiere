@@ -7,25 +7,18 @@
     </div>
 @endif
 
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3" role="alert" style="min-width: 300px;">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
 <style>
-    .page-title:after{
-        left: 46.5%;
-    }
-    body { background-color: #f8f4ee; }
     main {
         background-color: #f8f4ee;
+    }
+    .center-container {
+    text-align: center;
     }
 </style>
 
 @section('content')
-<div class="container py-5" style="font-family: 'Playfair Display'; background-color: #f8f4ee;">
-    <h2 class="mb-5 text-center fw-bold pb-2 page-title">Wishlist</h2>
+<div class="container py-5" style="font-family: 'Playfair Display'; color: #5c3c1d;">
+    <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">WISHLIST</h2>
 
     {{-- Perubahan utama ada di sini --}}
     @if($wishlist && $wishlist->wishlistItems->count() > 0)
@@ -38,21 +31,23 @@
                              alt="{{ $item->product->name }}" 
                              style="height: 250px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-semibold">{{ $item->product->name }}</h5>
-                            <p class="card-text text-muted mb-4">Rp {{ number_format($item->product->price, 0, ',', '.') }}</p>
+                            <h5 class="card-title fw-semibold" style="color: #5c3c1d;">{{ $item->product->name }}</h5>
+                            <p class="card-text mb-4" style="font-family: 'Montserrat', sans-serif; color: #5c3c1d;">Rp. {{ number_format($item->product->price, 0, ',', '.') }},-</p>
                             <div class="mt-auto d-flex justify-content-between">
                                 {{-- Add to Cart --}}
                                 <form action="{{ route('add_to_cart', ['product' => $item->product->product_id]) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="quantity" value="{{ $item->quantity }}"> {{-- Gunakan quantity dari item wishlist --}}
-                                    <button class="btn btn-dark btn-sm">Add to Cart</button>
+                                    <button type="submit" class="btn btn-lg" style="background-color:#5c3c1d; color: white; font-size: 14px; font-family: 'Montserrat', sans-serif; border-radius: 5px; padding: 10px 20px 10px 20px;"
+                                        onmouseover="this.style.backgroundColor='#3d2714';"
+                                        onmouseout="this.style.backgroundColor='#5c3c1d';">Add to Cart</button>
                                 </form>
 
                                 {{-- Remove from Wishlist --}}
                                 <form action="{{ route('remove_from_wishlist', ['product_id' => $item->product->product_id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-outline-danger btn-sm">Remove</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" style="font-family: 'Montserrat', sans-serif; padding: 10px 30px 10px 30px">Remove</button>
                                 </form>
                             </div>
                         </div>
@@ -61,8 +56,10 @@
             @endforeach
         </div>
     @else
-        <p class="text-center text-muted fs-5">Wishlist Anda kosong.</p> {{-- Pesan lebih akurat --}}
-        <a href="{{ route('product') }}" class="btn btn-primary">Lanjutkan Belanja</a>
+        <p class="text-center" style="padding-bottom: 50px; font-weight: 200; font-size: 16px; font-family: 'Montserrat', sans-serif; color: #5c3c1d;">You have no items in your wishlist.</p>
+        <div class="center-container">
+            <a href="{{ route('product') }}" class="btn" style="font-size: 16px; font-family: 'Montserrat', sans-serif; background-color: #5c3c1d; color: white; padding: 20px 130px 20px 130px;">CONTINUE SHOPPING</a>
+        </div>
     @endif
 </div>
 @endsection
