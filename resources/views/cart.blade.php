@@ -6,12 +6,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
-
 <style>
-    .page-title:after {
+    .page-title:after{
         left: 46.5%;
     }
-    main {
+    main{
         background-color: #f8f4ee;
     }
 </style>
@@ -20,7 +19,7 @@
 <div class="container py-5" style="font-family: 'Playfair Display';">
     <h2 class="mb-5 text-center fw-bold pb-2 page-title">Cart</h2>
 
-    @if ($cart && $cart->cartItems->count() > 0)
+    @if(is_array($cart) && count($cart) > 0)
         <div class="d-none d-md-flex fw-semibold text-muted border-bottom pb-3">
             <div class="col-md-5">Product</div>
             <div class="col-md-2 text-center">Quantity</div>
@@ -30,47 +29,57 @@
 
         @php $total = 0; @endphp
 
-        @foreach ($cart->cartItems as $item)
+        @foreach ($cart as $id => $item)
             @php 
-                $price = $item->product->price;
-                $qty = $item->quantity;
-                $subtotal = $price * $qty;
-                $total += $subtotal;
+                $itemTotal = $item['price'] * $item['quantity'];
+                $total += $itemTotal;
             @endphp
             <div class="row align-items-center border-bottom py-3">
                 {{-- Product --}}
                 <div class="col-md-5 d-flex align-items-center">
-                    <img src="{{ asset('productimages/' . $item->product->image_url) }}"
-                         alt="{{ $item->product->name }}"
+                    <img src="{{ asset('productimages/'.$item['image_url']) }}"
+                         alt="{{ $item['name'] }}"
                          style="width: 80px; height: 80px; object-fit: cover;"
                          class="me-3">
                     <div>
-                        <div class="fw-semibold">{{ $item->product->name }}</div>
-                        <div class="text-muted small d-md-none mt-1">Rp {{ number_format($price, 0, ',', '.') }}</div>
+                        <div class="fw-semibold">{{ $item['name'] }}</div>
+                        <div class="text-muted small d-md-none mt-1">Rp {{ number_format($item['price'], 0, ',', '.') }}</div>
                     </div>
                 </div>
 
                 {{-- Quantity --}}
-                <div class="col-md-2 text-center">{{ $qty }}</div>
+                <div class="col-md-2 text-center">{{ $item['quantity'] }}</div>
 
                 {{-- Price --}}
                 <div class="col-md-2 text-end d-none d-md-block">
-                    Rp {{ number_format($price, 0, ',', '.') }}
+                    Rp {{ number_format($item['price'], 0, ',', '.') }}
                 </div>
 
                 {{-- Total --}}
                 <div class="col-md-2 text-end">
-                    Rp {{ number_format($subtotal, 0, ',', '.') }}
+                    Rp {{ number_format($itemTotal, 0, ',', '.') }}
                 </div>
+
+                {{-- Remove --}}
+                <div class="col-md-1 text-end">
+                    <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Hapus item ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                    </form>
+                </div>
+
             </div>
         @endforeach
 
-        {{-- Total and Checkout --}}
+        {{-- Total dan Checkout --}}
         <div class="text-end mt-4">
             <div class="fw-bold mb-3">Total: Rp {{ number_format($total, 0, ',', '.') }}</div>
-            <a href="{{ route('checkout') }}" class="btn btn-dark w-100 mt-3 py-2">
-                PROCEED TO CHECKOUT
-            </a>
+            <form action="" method="POST">
+                @csrf
+                <input type="hidden" name="cart_id" value="{{ $cart->cart_id }}">
+                <button type="submit" class="btn btn-dark btn-lg" style="font-size: 14px; border-radius: 3px;">C H E C K O U T</button>
+            </form>
         </div>
     @else
         <p class="text-center text-muted fs-5">Your cart is empty</p>
