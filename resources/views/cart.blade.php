@@ -77,7 +77,7 @@
         {{-- Total dan Checkout --}}
         <div class="text-end mt-4">
             <div class="fw-bold mb-3" style="font-family: 'Montserrat', sans-serif; color: #5c3c1d;">TOTAL: Rp. {{ number_format($total, 0, ',', '.') }},-</div>
-            <form action="" method="POST">
+            <form action="{{ route('checkout') }}" method="GET">
                 @csrf
                 <input type="hidden" name="cart_id" value="{{ $cart->cart_id }}">
                 <button type="submit" class="btn btn-lg" style="background-color:#5c3c1d; color: white; font-size: 14px; font-family: 'Montserrat', sans-serif; border-radius: 5px; padding: 15px 70px 15px 70px;"

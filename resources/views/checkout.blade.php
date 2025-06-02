@@ -60,7 +60,7 @@
                             <textarea class="form-control" id="address" name="address" rows="3" required><?php if(Auth::user()->phone_number != null)?>{{{ Auth::user()->address }}}
                             </textarea>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="city" class="form-label">City</label>
                             <input type="text" class="form-control" id="city" name="city" required
                             @if(Auth::user()->city != null)
@@ -80,7 +80,7 @@
                             @if(Auth::user()->zip != null)
                             value="{{ Auth::user()->zip }}"
                             @endif>       
-                        </div>
+                        </div> --}}
                     </div>
                 </form>
             </div>

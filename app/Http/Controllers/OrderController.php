@@ -9,6 +9,7 @@ use App\Models\CartItem;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -172,13 +173,16 @@ public function showHistory()
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'zip' => 'required|string|max:10',
+            // 'city' => 'required|string|max:255',
+            // 'state' => 'required|string|max:255',
+            // 'zip' => 'required|string|max:10',
         ]);
 
         // Calculate totals
+
+        
         $subtotal = $cart->cartItems->sum(function($item) {
+             Log::info($item->product); 
             return $item->product->price * $item->quantity;
         });
 
@@ -190,14 +194,14 @@ public function showHistory()
         // Create full shipping address
         $shippingAddress = implode(', ', [
             $validated['address'],
-            $validated['city'],
-            $validated['state'],
-            $validated['zip']
+            // $validated['city'],
+            // $validated['state'],
+            // $validated['zip']
         ]);
 
         // Start transaction
         DB::beginTransaction();
-
+        
         try {
             // Create order
             $order = Orders::create([
@@ -206,9 +210,15 @@ public function showHistory()
                 'status' => 'pending',
                 'total_price' => $total,
                 'shipping_address' => $shippingAddress,
-                'status_del' => false
+                'status_del' => false,
+                'order_number' => 'ORD-' . now()->format('YmdHis'),
+                'subtotal' => $subtotal,
+                'taxAmount' => $tax,
+                'shippingCost' => $shipping,
+                'adminCost' => $adminFee
             ]);
 
+            
             // Create order items
             foreach ($cart->cartItems as $cartItem) {
                 OrderItem::create([
@@ -231,6 +241,7 @@ public function showHistory()
 
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'Failed to place order. Please try again.');
         }
     }

@@ -8,7 +8,7 @@
         </svg>
         <h2 class="fw-bold">Order Confirmed</h2>
         <p class="text-muted">Thank you for your purchase!</p>
-        <p>Order ID: #{{ $order->order_id }}</p>
+        <p>Order Number: #{{ $order->order_number }}</p>
     </div>
 
     <div class="row justify-content-center">

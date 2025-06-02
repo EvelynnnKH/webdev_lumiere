@@ -18,7 +18,12 @@ class Orders extends Model
         'status',
         'total_price',
         'shipping_address',
-        'status_del'
+        'status_del',
+        'order_number',
+        'subtotal',
+        'taxAmount',
+        'shippingCost',
+        'adminCost'
     ];
 
     protected $casts = [
