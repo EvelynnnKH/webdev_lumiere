@@ -12,20 +12,20 @@
         background-color: #f8f4ee;
     }
     .center-container {
-    text-align: center; /* Ini akan menengahkan konten inline/inline-block di dalamnya */
+    text-align: center;
     }
 </style>
 
 @section('content')
-<div class="container py-5" style="font-family: 'Playfair Display';">
+<div class="container py-5" style="font-family: 'Playfair Display'; color: #5c3c1d;">
     <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">CART</h2>
 
     @if ($cart && $cart->cartItems->count() > 0)
-        <div class="d-none d-md-flex fw-semibold text-muted border-bottom pb-3">
-            <div class="col-md-5">Product</div>
-            <div class="col-md-2 text-center">Quantity</div>
-            <div class="col-md-2 text-end">Price</div>
-            <div class="col-md-2 text-end">Total</div>
+        <div class="d-none d-md-flex border-bottom pb-3" style=" color: #5c3c1d; font-weight: 200; font-size: 14px; font-family: 'Montserrat', sans-serif;">
+            <div class="col-md-5">PRODUCT</div>
+            <div class="col-md-2 text-center">QUANTITY</div>
+            <div class="col-md-2 text-end">PRICE</div>
+            <div class="col-md-2 text-end">TOTAL</div>
         </div>
 
         @php $total = 0; @endphp
@@ -51,43 +51,44 @@
                 </div>
 
                 {{-- Quantity --}}
-                <div class="col-md-2 text-center">{{ $qty }}</div>
+                <div class="col-md-2 text-center" style="font-family: 'Montserrat', sans-serif;">{{ $qty }}</div>
 
                 {{-- Price --}}
-                <div class="col-md-2 text-end d-none d-md-block">
-                    Rp {{ number_format($price, 0, ',', '.') }}
+                <div class="col-md-2 text-end d-none d-md-block" style="font-family: 'Montserrat', sans-serif;">
+                    Rp. {{ number_format($price, 0, ',', '.') }},-
                 </div>
 
                 {{-- Total --}}
-                <div class="col-md-2 text-end">
-                    Rp {{ number_format($subtotal, 0, ',', '.') }}
+                <div class="col-md-2 text-end" style="font-family: 'Montserrat', sans-serif;">
+                    Rp. {{ number_format($subtotal, 0, ',', '.') }},-
                 </div>
 
                 {{-- Remove --}}
-                <div class="col-md-1 text-end">
-                    <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Hapus item ini?')">
+                <div class="col-md-1 text-end d-flex align-items-center" style="font-family: 'Montserrat', sans-serif;">
+                    <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Delete this item?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                        <button type="submit" class="btn btn-sm btn-danger" style="padding: 10px 20px 10px 20px">Remove</button>
                     </form>
                 </div>
-
             </div>
         @endforeach
-
+        
         {{-- Total dan Checkout --}}
         <div class="text-end mt-4">
-            <div class="fw-bold mb-3">Total: Rp {{ number_format($total, 0, ',', '.') }}</div>
-            <form action="{{ route('checkout') }}" method="get">
+            <div class="fw-bold mb-3" style="font-family: 'Montserrat', sans-serif; color: #5c3c1d;">TOTAL: Rp. {{ number_format($total, 0, ',', '.') }},-</div>
+            <form action="" method="POST">
                 @csrf
                 <input type="hidden" name="cart_id" value="{{ $cart->cart_id }}">
-                <button type="submit" class="btn btn-dark btn-lg" style="font-size: 14px; border-radius: 3px;">C H E C K O U T</button>
+                <button type="submit" class="btn btn-lg" style="background-color:#5c3c1d; color: white; font-size: 14px; font-family: 'Montserrat', sans-serif; border-radius: 5px; padding: 15px 70px 15px 70px;"
+                        onmouseover="this.style.backgroundColor='#3d2714';"
+                        onmouseout="this.style.backgroundColor='#5c3c1d';">C H E C K O U T</button>
             </form>
         </div>
     @else
-        <p class="text-center text-muted fs-5" style="padding-bottom: 50px; font-weight: 200; font-size: 20px; font-family: 'Montserrat', sans-serif; color: #5c3c1d;">You have no items in your cart.</p>
+        <p class="text-center" style="padding-bottom: 50px; font-weight: 200; font-size: 16px; font-family: 'Montserrat', sans-serif; color: #5c3c1d;">You have no items in your cart.</p>
         <div class="center-container">
-            <a href="{{ route('product') }}" class="btn" style="font-size: 16px; font-family: 'Montserrat', sans-serif; background-color: #5c3c1d; color: white; padding: 20px 100px 20px 100px;">CONTINUE SHOPPING</a>
+            <a href="{{ route('product') }}" class="btn" style="font-size: 16px; font-family: 'Montserrat', sans-serif; background-color: #5c3c1d; color: white; padding: 20px 130px 20px 130px;">CONTINUE SHOPPING</a>
         </div>
     @endif
 </div>
