@@ -33,8 +33,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/product-detil/{id}', [ShopController::class, 'showProductDetail'])
             ->name('product-detil.show');
 
-        Route::post('/checkout', [CheckoutController::class, 'show'])->name('checkout');
-
         Route::post('/order/process', [OrderController::class, 'process'])->name('order.process');
 
         Route::get('/myorder', [OrderController::class, 'show'])->name('order.show');
@@ -98,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
             ->name('remove_from_wishlist');
 
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
         Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
 
         // Orders

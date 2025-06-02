@@ -233,7 +233,7 @@
         <div class="order-card">
             <div class="order-card-header">
                 <div>
-                    <span class="order-number">Order #{{ $order['order_number'] }}</span>
+                    <span class="order-number">Order #{{ $order->order_number }}</span>
                     <span class="order-date ms-2">{{ $order['order_date'] }}</span>
                 </div>
                 <span class="order-status">Completed</span>
@@ -241,7 +241,7 @@
             
             <div class="order-card-body">
                 <div class="customer-info">
-                    <h5 class="customer-name">{{ $order['customer']['fullname'] }}</h5>
+                    <h5 class="customer-name">{{ $order->name }}</h5>
                 </div>
                 
                 <div class="order-summary">
@@ -251,7 +251,7 @@
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Order Total:</span>
-                        <span class="summary-value order-total">Rp {{ number_format($order['totals']['total'], 0, ',', '.') }}</span>
+                        <span class="summary-value order-total">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
                     </div>
                 </div>
                 
@@ -264,18 +264,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(array_slice($order['items'], 0, 3) as $item)
-                        <tr>
-                            <td class="product-name">{{ $item['name'] }}</td>
-                            <td class="product-qty">{{ $item['quantity'] }}</td>
-                            <td class="product-price">Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
-                        </tr>
+                        @foreach($orders as $order)
+                            <tr>
+                                <td colspan="3">
+                                    <strong>Order #{{ $order->order_number }}</strong> ({{ $order->order_date }})<br>
+                                    Status: {{ $order->status }}
+                                </td>
+                            </tr>
+                            @php
+                                $items = $order->items;
+                            @endphp
+                            @foreach($items->take(3) as $item)
+                                <tr>
+                                    <td class="product-name">{{ $item->product->name }}</td>
+                                    <td class="product-qty">{{ $item->quantity }}</td>
+                                    <td class="product-price">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
+                            @if($items->count() > 3)
+                                <tr>
+                                    <td colspan="3" class="more-items">+ {{ $items->count() - 3 }} more items</td>
+                                </tr>
+                            @endif
                         @endforeach
-                        @if(count($order['items']) > 3)
-                        <tr>
-                            <td colspan="3" class="more-items">+ {{ count($order['items']) - 3 }} more items</td>
-                        </tr>
-                        @endif
                     </tbody>
                 </table>
                 

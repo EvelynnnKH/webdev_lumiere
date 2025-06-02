@@ -16,16 +16,19 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
             $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->string('order_number');
             $table->date('order_date');
             $table->string('status');
             $table->integer('total_price');
+            $table->integer('subtotal');
+            $table->integer('taxAmount');
+            $table->integer('shippingCost');
+            $table->integer('adminCost');
             $table->string('shipping_address');
             $table->boolean('status_del')->default(false);
             $table->timestamps();
         });
-       
     }
-
 
     /**
      * Reverse the migrations.

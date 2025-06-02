@@ -73,8 +73,15 @@ class OrderController extends Controller
 
 public function showHistory()
 {
-    $orders = Session::get('order_history', []);
-    
+     if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'Silakan login untuk melihat riwayat pesanan Anda.');
+    }
+
+    $orders = Orders::where('user_id', Auth::id())
+                   ->with(['orderItems.product']) // ambil order item & detail produk
+                   ->orderBy('created_at', 'desc')
+                   ->get();
+
     return view('orderhistory', [
         'orders' => $orders
     ]);
@@ -189,7 +196,7 @@ public function showHistory()
         ]);
 
         // Start transaction
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             // Create order
@@ -217,13 +224,13 @@ public function showHistory()
             // Clear the cart
             CartItem::where('cart_id', $cart->cart_id)->delete();
 
-            \DB::commit();
+            DB::commit();
 
             return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
                 ->with('success', 'Order placed successfully!');
 
         } catch (\Exception $e) {
-            \DB::rollBack();
+            DB::rollBack();
             return redirect()->back()->with('error', 'Failed to place order. Please try again.');
         }
     }

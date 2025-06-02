@@ -29,38 +29,57 @@
                 <h4 class="fw-bold mb-4">Personal Information</h4>
                 <form id="checkoutForm" action="{{ route('order.place') }}" method="POST">
                     @csrf
+                    <?php
+                    $fullName = Auth::user()->name;;
+                    $nameParts = explode(' ', $fullName);
+                    $firstName = array_shift($nameParts); 
+                    $lastName = implode(' ', $nameParts); 
+                    ?>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" name="first_name" required>
+                            <input type="text" class="form-control" id="firstName" name="first_name" required value="{{ $firstName }}">
                         </div>
                         <div class="col-md-6">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="last_name" required>
+                            <input type="text" class="form-control" id="lastName" name="last_name" required value="{{ $lastName }}">
                         </div>
                         <div class="col-12">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" required value="{{ Auth::user()->email }}">
                         </div>
                         <div class="col-12">
                             <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                            <input type="tel" class="form-control" id="phone" name="phone" required 
+                            @if(Auth::user()->phone_number != null)
+                            value="{{ Auth::user()->phone_number }}"
+                            @endif>       
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            <textarea class="form-control" id="address" name="address" rows="3" required><?php if(Auth::user()->phone_number != null)?>{{{ Auth::user()->address }}}
+                            </textarea>
                         </div>
                         <div class="col-md-6">
                             <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" name="city" required>
+                            <input type="text" class="form-control" id="city" name="city" required
+                            @if(Auth::user()->city != null)
+                            value="{{ Auth::user()->city }}"
+                            @endif>       
                         </div>
                         <div class="col-md-4">
                             <label for="state" class="form-label">State/Province</label>
-                            <input type="text" class="form-control" id="state" name="state" required>
+                            <input type="text" class="form-control" id="state" name="state" required
+                            @if(Auth::user()->state != null)
+                            value="{{ Auth::user()->state }}"
+                            @endif>       
                         </div>
                         <div class="col-md-2">
                             <label for="zip" class="form-label">ZIP</label>
-                            <input type="text" class="form-control" id="zip" name="zip" required>
+                            <input type="text" class="form-control" id="zip" name="zip" required
+                            @if(Auth::user()->zip != null)
+                            value="{{ Auth::user()->zip }}"
+                            @endif>       
                         </div>
                     </div>
                 </form>
