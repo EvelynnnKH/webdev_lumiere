@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/orders/{order_id}', [OrderController::class, 'show']);
 
-        Route::get('/order-information', [OrderController::class, 'showAdmin'])
+        Route::get('/order-information/{orderNumber}', [OrderController::class, 'showAdmin'])
             ->name('showOrderDetails');
 
         Route::get('/product/create-form', [ShopController::class, 'showCreateProduct'])

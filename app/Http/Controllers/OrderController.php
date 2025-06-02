@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function showAdmin()
+    public function showAdmin($orderNumber)
     {
-        return view('dummyorderdetail');
+       $order = Orders::with('orderItems.product') // load relasi produk juga
+        ->where('order_number', $orderNumber)
+        ->firstOrFail(); // kalau nggak ketemu, lempar 404
+
+        return view('orderdetailadmin', compact('order'));
     }
         
     public function process(Request $request)
@@ -126,6 +130,37 @@ public function showHistory()
     }
 
     public function showOrderDetails($orderNumber)
+{
+    $orders = Session::get('order_history', []);
+    
+    // Find the specific order
+    $order = collect($orders)->firstWhere('order_number', $orderNumber);
+    
+    if (!$order) {
+        return redirect()->route('order.history')->with('error', 'Order not found');
+    }
+    
+    // Calculate totals (if not already stored in the order)
+    $subtotal = array_reduce($order['items'], function($carry, $item) {
+        return $carry + ($item['price'] * $item['quantity']);
+    }, 0);
+    
+    $taxAmount = $order['totals']['taxAmount'] ?? $subtotal * 0.1;
+    $shippingCost = $order['totals']['shippingCost'] ?? 10000;
+    $adminCost = $order['totals']['adminCost'] ?? 3000;
+    $total = $order['totals']['total'] ?? $subtotal + $taxAmount + $shippingCost + $adminCost;
+    
+    return view('orderdetails', [
+        'order' => $order,
+        'subtotal' => $subtotal,
+        'taxAmount' => $taxAmount,
+        'shippingCost' => $shippingCost,
+        'adminCost' => $adminCost,
+        'total' => $total
+    ]);
+}
+
+public function showAllOrderDetails($orderNumber)
 {
     $orders = Session::get('order_history', []);
     

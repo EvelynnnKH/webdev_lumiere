@@ -48,8 +48,8 @@
         <div class="card shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
-                    <strong>Order #ORD-20250519171312 </strong>
-                    <span class="ms-3">2025-05-19 17:21:23</span>
+                    <strong>Order {{ $order->order_number }} </strong>
+                    <span class="ms-3">{{ $order->order_date }}</span>
                 </div>
                 <span class="badge order-badge bg-success">Completed</span>
             </div>
@@ -58,16 +58,16 @@
                     <div class="col-md-6">
                         <h5>Customer Information</h5>
                         <div class="ps-3">
-                            <p><strong>Name:</strong> Anne Tantan</p>
-                            <p><strong>Email:</strong> annetan@gmail.com</p>
-                            <p><strong>Address:</strong> Jl. Mayjen Sungkono No.45, Surabaya</p>
+                            <p><strong>Name:</strong> {{ $order->user->name }}</p>
+                            <p><strong>Email:</strong> {{ $order->user->email }}</p>
+                            <p><strong>Address:</strong> {{ $order->user->address }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h5>Order Summary</h5>
                         <div class="ps-3">
-                            <p><strong>Order Date:</strong> 2025-05-19 17:21:23</p>
-                            <p><strong>Items:</strong> 1 products</p>
+                            <p><strong>Order Date:</strong> {{ $order->order_date }}</p>
+                            <p><strong>Items:</strong> {{ count($order->items) }} products</p>
                             <p><strong>Status:</strong> <span class="badge bg-success">Completed</span></p>
                         </div>
                     </div>
@@ -84,33 +84,35 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($order->items as $item)
                         <tr>
-                            <td>Vanilla Scented Candle</td>
-                            <td class="text-center">1</td>
-                            <td class="text-end">Rp. {{ number_format(80000, 0, ',', '.') }},-</td>
-                            <td class="text-end">Rp. {{ number_format(80000, 0, ',', '.') }},-</td>
+                            <td>{{ $item->name }}</td>
+                            <td class="text-center">{{ $item->quantity }}</td>
+                            <td class="text-end">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td class="text-end">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-end">Subtotal</td>
-                            <td class="text-end">Rp. {{ number_format(80000, 0, ',', '.') }},-</td>
+                            <td class="text-end">Rp {{ number_format($order->subtotal, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <td colspan="3" class="text-end">Tax (10%)</td>
-                            <td class="text-end">Rp. {{ number_format(8000, 0, ',', '.') }},-</td>
+                            <td class="text-end">Rp {{ number_format($order->taxAmount, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <td colspan="3" class="text-end">Shipping Cost</td>
-                            <td class="text-end">Rp. {{ number_format(10000, 0, ',', '.') }},-</td>
+                            <td class="text-end">Rp {{ number_format($order->shippingCost, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <td colspan="3" class="text-end">Admin Fee</td>
-                            <td class="text-end">Rp. {{ number_format(3000, 0, ',', '.') }},-</td>
+                            <td class="text-end">Rp {{ number_format($order->adminCost, 0, ',', '.') }}</td>
                         </tr>
                         <tr class="fw-bold">
                             <td colspan="3" class="text-end">Total</td>
-                            <td class="text-end">Rp. {{ number_format(110000, 0, ',', '.') }},-</td>
+                            <td class="text-end">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>
