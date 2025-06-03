@@ -84,6 +84,7 @@
             var currentQty = parseInt(qtyInput.value);
             if (!isNaN(currentQty) && currentQty < productStock) {
                 qtyInput.value = currentQty + 1;
+                updateHiddenQuantity();
             }
         }
 
@@ -93,7 +94,14 @@
             var currentQty = parseInt(qtyInput.value);
             if (currentQty > 1) {
                 qtyInput.value = currentQty - 1;
+                updateHiddenQuantity();
             }
+        }
+
+        function updateHiddenQuantity() {
+            var qtyInput = document.getElementById('quantity');
+            var hiddenQtyInput = document.getElementById('quantityInput');
+            hiddenQtyInput.value = qtyInput.value;
         }
     </script>
 </body>
