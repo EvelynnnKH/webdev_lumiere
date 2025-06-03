@@ -41,7 +41,7 @@
     <p class="mb-3">Welcome to Lumiere. This Privacy Policy outlines how we collect, use, and protect your personal information when you visit or make a purchase from our website.</p>
 
     <h6 class="mt-4 fw-semibold">1. Personal Information We Collect</h6>
-    <p>When you make a purchase or attempt to make a purchase through our website, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit/debit card numbers or other payment method), phone number, and email address. This is referred to as <strong>"Personal Information".</strong></p>
+    <p>When you make a purchase or attempt to make a purchase through our website, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit/debit card numbers or other payment method), phone number, and email address. This is referred to as <strong>"Personal Information"</strong>.</p>
 
     <h6 class="mt-4 fw-semibold">2. How We Use Your Information</h6>
     <p>We use the collected Personal Information to:</p>
