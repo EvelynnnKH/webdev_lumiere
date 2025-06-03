@@ -131,34 +131,25 @@ public function showHistory()
 
     public function showOrderDetails($orderNumber)
 {
-    $orders = Session::get('order_history', []);
-    
-    // Find the specific order
-    $order = collect($orders)->firstWhere('order_number', $orderNumber);
-    
+    $order = Orders::where('order_number', $orderNumber)->with('items')->first();
+
     if (!$order) {
         return redirect()->route('order.history')->with('error', 'Order not found');
     }
-    
-    // Calculate totals (if not already stored in the order)
-    $subtotal = array_reduce($order['items'], function($carry, $item) {
-        return $carry + ($item['price'] * $item['quantity']);
-    }, 0);
-    
-    $taxAmount = $order['totals']['taxAmount'] ?? $subtotal * 0.1;
-    $shippingCost = $order['totals']['shippingCost'] ?? 10000;
-    $adminCost = $order['totals']['adminCost'] ?? 3000;
-    $total = $order['totals']['total'] ?? $subtotal + $taxAmount + $shippingCost + $adminCost;
-    
-    return view('orderdetails', [
-        'order' => $order,
-        'subtotal' => $subtotal,
-        'taxAmount' => $taxAmount,
-        'shippingCost' => $shippingCost,
-        'adminCost' => $adminCost,
-        'total' => $total
-    ]);
+
+    // Misalnya order->items adalah relasi satu ke banyak
+    $subtotal = $order->items->sum(function($item) {
+        return $item->price * $item->quantity;
+    });
+
+    $taxAmount = $order->tax_amount ?? $subtotal * 0.1;
+    $shippingCost = $order->shipping_cost ?? 10000;
+    $adminCost = $order->admin_cost ?? 3000;
+    $total = $order->total ?? $subtotal + $taxAmount + $shippingCost + $adminCost;
+
+    return view('orderdetails', compact('order', 'subtotal', 'taxAmount', 'shippingCost', 'adminCost', 'total'));
 }
+
 
 public function showAllOrderDetails($orderNumber)
 {
