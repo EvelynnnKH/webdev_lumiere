@@ -1,10 +1,7 @@
 @extends('base')
 
 @section('content')
-@php
-    $boostedProduct = $products->firstWhere('product_id', 12);
-@endphp
-<div class="relative w-full main-page" style="margin: auto; max-margin: 150px; background: url('{{ asset('productimages/' . $boostedProduct->image_url) }}') no-repeat center center/cover;">
+<div class="relative w-full main-page" style="margin: auto; max-margin: 150px; background: url('{{ asset('img/cover.jpg') }}') no-repeat center center/cover;">
     {{-- Overlay hitam transparan, mek agak ga ketok gtw knp --}}
     <div class="bg-white bg-opacity-30"></div>
     
