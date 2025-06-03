@@ -65,14 +65,12 @@
                 <ul class="list-unstyled">
                     <li style="margin-bottom: 15px;"><a href="{{ route('contactus') }}">Contact Us</a></li>
                     <li style="margin-bottom: 15px;"><a href="{{ route('faq') }}">FAQ</a></li>
-                    <li><a href="#">Shipping</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-4">
                 <h6 style="margin-bottom: 20px;">LEGAL</h6>
                 <ul class="list-unstyled">
                     <li style="margin-bottom: 15px;"><a href="{{ route('termsofservice') }}">Terms & Conditions</a></li>
-                    <li style="margin-bottom: 15px;"><a href="#">Safety Certification</a></li>
                     <li><a href="{{ route('privacypolicy') }}">Privacy Policy</a></li>
                 </ul>
             </div>
