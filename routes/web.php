@@ -104,6 +104,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/order/confirmation/{order_id}', [OrderController::class, 'showConfirmation'])->name('order.confirmation');
 
         Route::get('/cart', [ShopController::class, 'index'])->name('cart');
+
+        Route::get('/order-details/{orderNumber}', [OrderController::class, 'showOrderDetails'])->name('order.details');
     });
 });
 
