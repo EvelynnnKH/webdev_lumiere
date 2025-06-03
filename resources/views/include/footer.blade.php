@@ -1,7 +1,7 @@
 <style>
     .footer-with-border {
         border-top: 1px solid #d3d3d3;
-        background-color: #f8f4ee;
+        background-color: white;
     }
 
     footer h6 {
