@@ -145,8 +145,9 @@ Route::get('/signup', function () {
 //     return redirect()->route('login')->with('success', 'Password changed successfully!');
 // })->name('passwordreset');
 
-Route::post('/forget-password', [AuthController::class, 'resetPassword'])->name('passwordreset');
-
+// Route::post('/forget-password', [AuthController::class, 'resetPassword'])->name('passwordreset');
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('forget-password');
+Route::post('/forget-password', [AuthController::class, 'handleForgetPassword'])->name('forget-password.submit');
 
 Route::post('/signup', [AuthController::class, 'register'])->name('signup.store');
 

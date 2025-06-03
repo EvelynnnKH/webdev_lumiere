@@ -22,29 +22,29 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Gate::define('insert-product', function(User $user){
-            return in_array($user->role->role, ['admin']);
+        Gate::define('insert-product', function (User $user) {
+            return in_array($user->role, ['admin']);
         });
-        Gate::define('edit-product', function(User $user){
-            return in_array($user->role->role, ['admin']);
+        Gate::define('edit-product', function (User $user) {
+            return in_array($user->role, ['admin']);
         });
-        Gate::define('delete-product', function(User $user){
-            return in_array($user->role->role, ['admin']);
+        Gate::define('delete-product', function (User $user) {
+            return in_array($user->role, ['admin']);
         });
-        Gate::define('view-allorder', function(User $user){
-            return in_array($user->role->role, ['admin']);
+        Gate::define('view-allorder', function (User $user) {
+            return in_array($user->role, ['admin']);
         });
-        Gate::define('wishlist-product', function(User $user){
-            return in_array($user->role->role, ['user']);
+        Gate::define('wishlist-product', function (User $user) {
+            return in_array($user->role, ['user']);
         });
-        Gate::define('addToCart-product', function(User $user){
-            return in_array($user->role->role, ['user']);
+        Gate::define('addToCart-product', function (User $user) {
+            return in_array($user->role, ['user']);
         });
-        Gate::define('checkOut-product', function(User $user){
-            return in_array($user->role->role, ['user']);
+        Gate::define('checkOut-product', function (User $user) {
+            return in_array($user->role, ['user']);
         });
-        Gate::define('view-myorder', function(User $user){
-            return in_array($user->role->role, ['user']);
+        Gate::define('view-myorder', function (User $user) {
+            return in_array($user->role, ['user']);
         });
     }
 }

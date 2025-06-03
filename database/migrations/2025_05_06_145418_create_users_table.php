@@ -17,15 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('address')->nullable();
-            // $table->string('city')->nullable();
-            // $table->string('zip')->nullable();
-            // $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('state')->nullable();
             $table->string('phone_number')->nullable();
             // $table->string('role');
+            // $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+            $table->string('role')->default('user');
             $table->timestamps();
             $table->boolean('status_del')->default(false);
         });
-        
     }
 
     /**
