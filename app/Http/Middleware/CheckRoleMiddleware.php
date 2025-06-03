@@ -16,7 +16,7 @@ class CheckRoleMiddleware
      */
 public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if(in_array(Auth::user()->role->role, $roles)){
+        if(in_array(Auth::user()->role, $roles)){
             return $next($request);
         }
         abort(403);

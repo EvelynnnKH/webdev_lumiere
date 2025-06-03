@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="mb-3 text-end">
-                                <a href="{{ route('forgetpassword') }}" class="text-decoration-none"
+                                <a href="{{ route('forget-password.submit') }}" class="text-decoration-none"
                                     style="color: #603700;">Forget Password?</a>
                             </div>
 
