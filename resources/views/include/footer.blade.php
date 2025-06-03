@@ -70,7 +70,7 @@
             <div class="col-md-4 mb-4">
                 <h6 style="margin-bottom: 20px;">LEGAL</h6>
                 <ul class="list-unstyled">
-                    <li style="margin-bottom: 15px;"><a href="{{ route('termsofservice') }}">Terms & Conditions</a></li>
+                    <li style="margin-bottom: 15px;"><a href="{{ route('termsofservice') }}">Terms Of Services</a></li>
                     <li><a href="{{ route('privacypolicy') }}">Privacy Policy</a></li>
                 </ul>
             </div>
