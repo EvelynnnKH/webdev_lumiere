@@ -1,5 +1,11 @@
 @extends('base')
 
+<style>
+    main {
+        background-color: #f8f4ee;
+    }
+</style>
+
 @section('content')
 <style>
 .full-content{
@@ -26,11 +32,11 @@
     color: white;
 }
 </style>
-<div class="container mt-5">
+<div class="container mt-5" style="color: #5c3c1d;">
     <a href={{ url()->previous() }} class="back-button" title="Back">
             ←
         </a>
-    <h2 class="fw-bold" style="font-family: 'Playfair Display';">Contact Us</h2>
+    <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">CONTACT US</h2>
 
     <div class="row mt-4">
         <div class="col-md-6">
@@ -38,34 +44,34 @@
         </div>
 
         <div class="col-md-6">
-            <h5 class="fw-bold">Questions or concerns? We're here for you.</h5>
+            <h6 class="fw-bold">Questions or concerns? We're here for you.</h6>
             <p>Need help, have a question, or just want to say hello? Contact Lumiere’s customer service or find the answers below.</p>
 
-            <h5 class="fw-bold mt-4">Get your answer right now:</h5>
+            <h6 class="fw-bold mt-4">Get your answer right now:</h6>
             <ul>
-                <li><a href="{{ route('faq') }}" style="color: black;">How can I safely use and care for my candles/home fragrances?</a></li>
-                <li><a href="{{ route('faq') }}" style="color: black;">Where do you ship?</a></li>
-                <li><a href="{{ route('faq') }}" style="color: black;">See all FAQ</a></li>
+                <li><a href="{{ route('faq') }}" style="color: #5c3c1d;">How can I safely use and care for my candles/home fragrances?</a></li>
+                <li><a href="{{ route('faq') }}" style="color: #5c3c1d;">Where do you ship?</a></li>
+                <li><a href="{{ route('faq') }}" style="color: #5c3c1d;">See all FAQ</a></li>
             </ul>
         </div>
 
         <div class="row mt-4">
                 <div class="col-md-4">
                     <h6 class="fw-bold">Lumiere Customer Care</h6>
-                    <p><strong>Phone:</strong> <a href="tel:+6212345678910" style="color: black; font-weight: bold;">+6212345678910</a><br>
-                    <strong>Whatsapp:</strong> <a href="https://wa.me/6212345678910" style="color: black; font-weight: bold;">+6212345678910</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+6212345678910" style="color: #5c3c1d; font-weight: bold;">+6212345678910</a><br>
+                    <strong>Whatsapp:</strong> <a href="https://wa.me/6212345678910" style="color: #5c3c1d; font-weight: bold;">+6212345678910</a></p>
                     <p>Our phone lines are open:<br>Monday - Sunday: 10:00 – 18:00</p>
                 </div>
                 <div class="col-md-4">
                     <h6 class="fw-bold">Feedback</h6>
                     <p>Tell us about your Lumiere experience.<br>
-                    <a href="mailto:info@ciputra.ac.id" style="color: black; font-weight: bold;">Send feedback through our e-mail</a></p>
+                    <a href="mailto:info@ciputra.ac.id" style="color: #5c3c1d; font-weight: bold;">Send feedback through our e-mail</a></p>
                 </div>
                 <div class="col-md-4">
                     <h6 class="fw-bold">E-mail</h6>
                     <p>E-mail us anytime and we’ll get back to you within <strong>24 hours.</strong>
                         Send us an e-mail at:<br>
-                    <a href="mailto:info@ciputra.ac.id" style="color: black; font-weight: bold;">customercare@lumiere.co.id</a></p>
+                    <a href="mailto:info@ciputra.ac.id" style="color: #5c3c1d; font-weight: bold;">customercare@lumiere.co.id</a></p>
                 </div>
         </div>
     </div>
