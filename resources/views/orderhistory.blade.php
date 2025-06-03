@@ -234,9 +234,9 @@
             <div class="order-card-header">
                 <div>
                     <span class="order-number">Order #{{ $order->order_number }}</span>
-                    <span class="order-date ms-2">{{ $order['order_date'] }}</span>
+                    <span class="order-date ms-2">{{ $order->order_date }}</span>
                 </div>
-                <span class="order-status">Completed</span>
+                <span class="order-status">{{ ucfirst($order->status) }}</span>
             </div>
             
             <div class="order-card-body">
@@ -247,7 +247,7 @@
                 <div class="order-summary">
                     <div class="summary-row">
                         <span class="summary-label">Items:</span>
-                        <span class="summary-value">{{ count($order['items']) }} products</span>
+                        <span class="summary-value">{{ count($order->items) }} products</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Order Total:</span>
@@ -264,34 +264,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($orders as $order)
+                        @foreach($order->items->take(3) as $item)
                             <tr>
-                                <td colspan="3">
-                                    <strong>Order #{{ $order->order_number }}</strong> ({{ $order->order_date }})<br>
-                                    Status: {{ $order->status }}
-                                </td>
+                                <td class="product-name">{{ $item->product->name }}</td>
+                                <td class="product-qty">{{ $item->quantity }}</td>
+                                <td class="product-price">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                             </tr>
-                            @php
-                                $items = $order->items;
-                            @endphp
-                            @foreach($items->take(3) as $item)
-                                <tr>
-                                    <td class="product-name">{{ $item->product->name }}</td>
-                                    <td class="product-qty">{{ $item->quantity }}</td>
-                                    <td class="product-price">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                                </tr>
-                            @endforeach
-                            @if($items->count() > 3)
-                                <tr>
-                                    <td colspan="3" class="more-items">+ {{ $items->count() - 3 }} more items</td>
-                                </tr>
-                            @endif
                         @endforeach
+                        @if($order->items->count() > 3)
+                            <tr>
+                                <td colspan="3" class="more-items">+ {{ $order->items->count() - 3 }} more items</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
                 
                 <div class="text-end">
-                    <a href="{{ route('order.details', ['orderNumber' => $order['order_number']]) }}" 
+                    <a href="{{ route('order.details', ['orderNumber' => $order->order_number]) }}" 
                        class="btn view-details-btn">
                         <i class="fas fa-eye me-1"></i> View Full Details
                     </a>
@@ -299,7 +288,7 @@
             </div>
         </div>
         @endforeach
-        
+
         <div class="text-center mt-4">
             <a href="{{ url('home') }}" class="btn back-home-btn">
                 <i class="fas fa-home me-2"></i> Back to Home

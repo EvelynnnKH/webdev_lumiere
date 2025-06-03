@@ -58,9 +58,9 @@
                     <div class="col-md-6">
                         <h5>Customer Information</h5>
                         <div class="ps-3">
-                            <p><strong>Name:</strong> {{ $order['customer']['fullname'] }}</p>
-                            <p><strong>Email:</strong> {{ $order['customer']['email'] }}</p>
-                            <p><strong>Address:</strong> {{ $order['customer']['address'] }}</p>
+                            <p><strong>Name:</strong> {{ $order['user']['fullname'] }}</p>
+                            <p><strong>Email:</strong> {{ $order['user']['email'] }}</p>
+                            <p><strong>Address:</strong> {{ $order['user']['address'] }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
