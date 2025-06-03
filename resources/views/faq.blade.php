@@ -1,5 +1,11 @@
 @extends('base')
 
+<style>
+    main {
+        background-color: #f8f4ee;
+    }
+</style>
+
 @section('content')
 <style>
 .full-content{
@@ -30,7 +36,7 @@
     <a href={{ url()->previous() }} class="back-button" title="Back">
             ←
         </a>
-    <h2 class="fw-bold mb-4" style="font-family: 'Playfair Display';">Frequently Asked Questions</h2>
+    <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">FREQUENTLY ASKED QUESTIONS</h2>
 
     <div class="accordion">
         @php
@@ -92,9 +98,10 @@
         @foreach ($faqs as $index => $faq)
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{ $index }}">
-                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="false" aria-controls="collapse{{ $index }}" style="font-size: 1.1rem;">
                     {{ $faq['question'] }}
                 </button>
+
             </h2>
             <div id="collapse{{ $index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $index }}">
                 <div class="accordion-body">
