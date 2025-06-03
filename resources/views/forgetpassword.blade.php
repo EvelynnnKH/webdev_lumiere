@@ -28,7 +28,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('passwordreset') }}" id="resetPasswordForm">
+                        <form method="POST" action="{{ route('forget-password.submit') }}" id="resetPasswordForm">
                             @csrf
                             <div class="mb-4">
                                 <input type="email" class="form-control border-0 border-bottom rounded-0 p-0"

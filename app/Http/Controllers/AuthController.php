@@ -81,4 +81,28 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Password changed successfully! Please login with your new password.');
     }
+
+    public function showForgetPasswordForm()
+    {
+        return view('forgetpassword');
+    }
+
+    public function handleForgetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email address not found'])->withInput();
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('login')->with('success', 'Password changed successfully! Please login with your new password.');
+    }
 }
