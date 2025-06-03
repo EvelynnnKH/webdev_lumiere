@@ -22,26 +22,28 @@
     @can('insert-product')
         <div class="list-product">
     <div class="button-container">
-        <a href="{{ route('createProduct.show') }}" class="btn btn-insert">Add New Product</a>
+        <a href="{{ route('createProduct.show') }}" class="btn-insert">+</a>
     </div>
     @endcan
     
 
     <div class="main-content">
         <!-- Sidebar Kategori -->
-        <div class="sidebar">
-            <h3 class="category-title" style="font-family:'Playfair Display';">Categories: </h3>
-            
-            <!-- Untuk mobile: Toggle kategori -->
-            <button class="category-toggle" onclick="toggleCategoryList()">Pilih Kategori</button>
-            <div class="category-list-wrapper">
-                @foreach ($products->unique('category_id') as $p)
-                    <a href="{{ route('category.show', $p->category->category_id) }}" class="category-card">
-                        {{ $p->category['name'] }}
-                    </a>
-                @endforeach
+        <div class="top-bar">
+            <div class="category-dropdown-wrapper">
+                <label for="categoryDropdown" class="category-label">Categories:</label>
+                <select class="form-select" id="categoryDropdown" onchange="goToCategory(this.value)">
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach ($products->unique('category_id') as $p)
+                        <option value="{{ route('category.show', $p->category->category_id) }}">
+                            {{ $p->category['name'] }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
         </div>
+
+
 
         <!-- Grid Produk -->
         <div class="product-grid">
@@ -63,11 +65,13 @@
     </div>
 </div>
 <script>
-    function toggleCategoryList() {
-        const wrapper = document.querySelector('.category-list-wrapper');
-        wrapper.classList.toggle('show');
+    function goToCategory(url) {
+        if (url) {
+            window.location.href = url;
+        }
     }
 </script>
+
 
     @endsection
 </body>
