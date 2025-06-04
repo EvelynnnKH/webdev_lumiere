@@ -27,13 +27,13 @@
     @endcan
     
 
-    <div class="main-content">
+    <div class="main-content" style="font-family: 'Montserrat', sans-serif;">
         <!-- Sidebar Kategori -->
         <div class="top-bar">
             <div class="category-dropdown-wrapper">
-                <label for="categoryDropdown" class="category-label">Categories:</label>
-                <select class="form-select" id="categoryDropdown" onchange="goToCategory(this.value)">
-                    <option value="">-- Pilih Kategori --</option>
+                <label for="categoryDropdown" class="category-label" style="font-family: 'Montserrat', sans-serif;">Categories:</label>
+                <select class="form-select" style="font-family: 'Montserrat', sans-serif;" id="categoryDropdown" onchange="goToCategory(this.value)">
+                    <option value="">-- Choose Category --</option>
                     @foreach ($products->unique('category_id') as $p)
                         <option value="{{ route('category.show', $p->category->category_id) }}">
                             {{ $p->category['name'] }}
