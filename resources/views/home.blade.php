@@ -56,10 +56,13 @@
     <div class="row g-0">
         @foreach ($categoryProducts as $productShow) 
             <div class="col-sm-3 col-md-6 col-lg-3">
-                <div class="category-card" style="background: url('{{ asset('productimages/' . $productShow['image_url']) }}') no-repeat center center/cover; height: 200px;">
-                    <div class="category-overlay d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="text-white fs-3 mb-3" style= "text-align: center;">{{ $productShow['category_name'] }}</h3>
-                        <a href="{{ route('category.show', $productShow['category_id']) }}" class="btn btn-light px-4">SHOP</a>
+                    <div class="category-card" style="background: url('{{ asset('productimages/' . $productShow['image_url']) }}') no-repeat center center/cover; height: 250px;">
+                        <div class="category-overlay flex-column align-items-center">
+                        <div class="category-label text-center py-3 bg-white">
+                            <a href="{{ route('category.show', $productShow['category_id']) }}" class="text-decoration-none">
+                                <h5 class="m-0 text-dark">{{ strtoupper($productShow['category_name']) }}</h5>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,16 +108,9 @@
 
     <div class="row justify-content-center">
         @foreach ($placeholder as $item)
-            <div class="col-10 col-sm-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center" style="color: #5c3c1d;">
-                <div class="text-start" style="width: 250px; height: 400px">
-                    <img src="{{ asset('productimages/'.$item['image_url']) }}" alt="Product" class="img-fluid mb-1" style="object-fit: cover; height: 180px; width: 100%;">
-
-                    {{-- See more link --}}
-                    <div class="text-end mb-2">
-                        <a href="{{ route('product-detil.show', $item['id']) }}" style="font-size: 0.85rem; color: #5c3c1d; text-decoration: underline;">
-                            See more...
-                        </a>
-                    </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="color: #5c3c1d;">
+                <div class="text-start h-100">
+                    <img src="{{ asset('productimages/'.$item['image_url']) }}" alt="Product" class="img-fluid mb-1" style="object-fit: cover; height: 240px; width: 100%;">
 
                     <p class="text-muted mb-1" style="font-style: italic; font-size: 0.9rem;">{{ $item['category_name'] }}</p>
                     <h6 class="mb-1 fw-bold" style="font-size: 1rem;">{{ $item['productName'] }}</h6>
@@ -126,7 +122,10 @@
                         <span class="fw-bold">Rp. {{ number_format($item['price'], 0, ',', '.') }},-</span>
                         <span class="text-muted" style="font-style: italic;">Rate: 5/5</span>
                     </div>
-                </div>
+                        <a href="{{ route('product-detil.show', $item['id']) }}" class="btn w-100 mt-3" style="background-color: #5c3c1d; color: white; font-weight: 500;">
+                            SEE MORE
+                        </a>
+                    </div>
             </div>
         @endforeach
     </div>
@@ -137,21 +136,42 @@
 
 <style>
     .category-card {
-        position: relative;
-        overflow: hidden;
-    }
-    .category-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.4);
-        transition: all 0.3s ease;
-    }
-    .category-card:hover .category-overlay {
-        background-color: rgba(0, 0, 0, 0.6);
-    }
+    position: relative;
+    overflow: hidden;
+}
+
+.category-overlay {
+    position: absolute;
+    inset: 0; /* shorthand utk top/right/bottom/left = 0 */
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* label turun ke bawah */
+    align-items: center;
+}
+
+.category-card:hover .category-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.category-label {
+    font-weight: 600;
+    letter-spacing: 1px;
+    width: 80%;
+    margin-bottom: 20px;
+}
+.bg-opacity-30{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* label turun ke bawah */
+    align-items: center;
+}
+
+    
 @media (min-width: 1400px) {
     .main-page{
         height: 90vh;
