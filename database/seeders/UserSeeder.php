@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('user'),
                 'address' => 'Jl. Mayjen Sungkono No.45, Surabaya',
                 'phone_number' => '081234567890',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -35,6 +36,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('dwinda456'),
                 'address' => 'Jl. Dharmawangsa No.12, Surabaya',
                 'phone_number' => '081298765432',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -46,6 +48,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('jacqlyn789'),
                 'address' => 'Jl. Diponegoro No.78, Surabaya',
                 'phone_number' => '082134567891',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -57,6 +60,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('heidy321'),
                 'address' => 'Jl. Raya Darmo No.88, Surabaya',
                 'phone_number' => '082198765432',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -68,6 +72,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('angela654'),
                 'address' => 'Jl. Gubeng No.90, Surabaya',
                 'phone_number' => '081223344556',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -79,6 +84,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('natalie987'),
                 'address' => 'Jl. Manyar No.67, Surabaya',
                 'phone_number' => '081277788899',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -90,6 +96,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('sharon123'),
                 'address' => 'Jl. Raya Jemursari No.23, Surabaya',
                 'phone_number' => '082111223344',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -101,6 +108,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('jessica456'),
                 'address' => 'Jl. Ngagel No.34, Surabaya',
                 'phone_number' => '081288899900',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -112,6 +120,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('rayna789'),
                 'address' => 'Jl. Tegalsari No.56, Surabaya',
                 'phone_number' => '081244556677',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -123,6 +132,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('bernardo321'),
                 'address' => 'Jl. Kalibokor No.22, Surabaya',
                 'phone_number' => '082233344455',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -134,6 +144,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('admin'),
                 'address' => 'Jl. Bratang No.40, Surabaya',
                 'phone_number' => '081255566677',
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -145,6 +156,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('amanda987'),
                 'address' => 'Jl. Ketintang No.11, Surabaya',
                 'phone_number' => '082277788899',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -156,6 +168,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('tsania123'),
                 'address' => 'Jl. Kertajaya No.13, Surabaya',
                 'phone_number' => '081266778899',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -167,6 +180,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('jonathan456'),
                 'address' => 'Jl. Pucang Anom No.15, Surabaya',
                 'phone_number' => '081299887766',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
@@ -178,6 +192,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('dave789'),
                 'address' => 'Jl. Wonokromo No.18, Surabaya',
                 'phone_number' => '082211122233',
+                'role' => 'user',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'status_del' => 0
