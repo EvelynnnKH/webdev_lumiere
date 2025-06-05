@@ -113,7 +113,7 @@
                     <img src="{{ asset('productimages/'.$item['image_url']) }}" alt="Product" class="img-fluid mb-1" style="object-fit: cover; height: 240px; width: 100%;">
 
                     <p class="text-muted mb-1" style="font-style: italic; font-size: 0.9rem;">{{ $item['category_name'] }}</p>
-                    <h6 class="mb-1 fw-bold" style="font-size: 1rem;">{{ $item['productName'] }}</h6>
+                    <h6 class="mb-1 fw-bold" style="font-size: 1.1rem; font-family: 'Playfair Display'">{{ $item['productName'] }}</h6>
                     <p class="text-muted mb-2" style="font-style: italic; font-size: 0.9rem; height: 70px;">
                         {{ $item['description'] }}
                     </p>
