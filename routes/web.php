@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 

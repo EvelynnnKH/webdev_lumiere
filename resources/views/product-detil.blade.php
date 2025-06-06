@@ -47,19 +47,19 @@
                     </form>
                 @endcan
                 
+                @can('edit-product')
+                    <form action="{{ route('edit_product_form', ['product_id' => $product->product_id]) }}"  method="GET">
+                    @csrf
+                    <input type="hidden" name="quantity" id="hidden-quantity" value="1">
+                    <button type="submit" class="edit-product-btn">Edit Product</button>
+                    </form>
+                @endcan
                 @can('delete-product')
                         <form action="{{ route('delete_product', ['product_id' => $product->product_id]) }}" method="POST"
                         onsubmit="return confirm('Are you sure want to delete this product?')" style="display: inline">
                         @csrf
                         @method('delete')
                         <button type="submit" class="delete-product-btn">Delete</button>
-                    </form>
-                @endcan
-                @can('edit-product')
-                    <form action="{{ route('edit_product_form', ['product_id' => $product->product_id]) }}"  method="GET">
-                    @csrf
-                    <input type="hidden" name="quantity" id="hidden-quantity" value="1">
-                    <button type="submit" class="edit-product-btn">Edit Product</button>
                     </form>
                 @endcan
                 

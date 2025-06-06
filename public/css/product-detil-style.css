@@ -113,7 +113,7 @@
         border-radius: 8px;
         transition: background-color 0.3s ease;
     }
-    .edit-product-btn{
+    .delete-product-btn{
         background-color: #967855;
         color: #ffffff;
         padding: 0.75rem 1.5rem;
@@ -122,11 +122,11 @@
         transition: background-color 0.3s ease;
     }
 
-    .add-to-wishlist-btn:hover, .edit-product-btn:hover {
+    .add-to-wishlist-btn:hover, .delete-product-btn:hover {
         background-color: #ce9f6a;
     }
 
-    .add-to-cart-btn, .delete-product-btn {
+    .add-to-cart-btn, .edit-product-btn {
         background-color: #5c3c1d; 
         color: white;
         padding: 0.75rem 1.5rem;
@@ -136,7 +136,7 @@
         transition: background-color 0.3s ease;
     }
 
-    .add-to-cart-btn:hover, .delete-product-btn:hover {
+    .add-to-cart-btn:hover, .edit-product-btn:hover {
         background-color: rgb(169, 109, 48); 
     }
 
