@@ -182,7 +182,7 @@ public function showAllOrderDetails($orderNumber)
     ]);
 }
 
-    public function placeOrder(Request $request)
+   public function placeOrder(Request $request)
     {
         $user = Auth::user();
         $cart = Cart::where('user_id', $user->user_id)->with('cartItems.product')->first();
@@ -260,7 +260,36 @@ public function showAllOrderDetails($orderNumber)
             // Clear the cart
             CartItem::where('cart_id', $cart->cart_id)->delete();
 
+            // Midtrans Config
+            Config::$serverKey = config('midtrans.server_key');
+            Config::$isProduction = config('midtrans.is_production');
+            Config::$isSanitized = true;
+            Config::$is3ds = true;
+ 
+            // Create Midtrans Transaction
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $order->order_id,
+                    'gross_amount' => (int) $total,
+                ],
+                'customer_details' => [
+                    'name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                    'phone' => $request->phone,
+                ],
+				'callbacks' => [
+                    'finish' => route('order.confirmation', ['order_id' => $order->order_id]),
+                ]
+            ];
+ 
+            $snapUrl = Snap::createTransaction($params)->redirect_url;
+            // Save Payment URL
+            $order->payment_url = $snapUrl;
+            $order->save();
+            
             DB::commit();
+
+            return redirect($snapUrl);
 
             return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
                 ->with('success', 'Order placed successfully!');
@@ -285,4 +314,5 @@ public function showAllOrderDetails($orderNumber)
     }
 
     }  
+
 
