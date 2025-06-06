@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('shipping_address');
             $table->boolean('status_del')->default(false);
             $table->timestamps();
+            $table->text('payment_url')->nullable();
         });
     }
 
