@@ -23,7 +23,8 @@ class Orders extends Model
         'subtotal',
         'taxAmount',
         'shippingCost',
-        'adminCost'
+        'adminCost',
+        'payment_url',
     ];
 
     protected $casts = [
