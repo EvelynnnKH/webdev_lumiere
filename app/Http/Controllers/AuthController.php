@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\UserRole;
 
 class AuthController extends Controller
 {
@@ -52,10 +53,13 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
+        $role = UserRole::where('role', 'user')->first();
+
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role_id' => $role ? $role->id : 1,
         ]);
 
         return redirect()->route('login')->with('success', 'Account created successfully! Please login.');

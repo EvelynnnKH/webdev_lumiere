@@ -17,46 +17,42 @@
         </div>
     @endif
     <div class="container-fluid d-flex justify-content-center align-items-center"
-        style="min-height: 80vh; background: url('{{ asset('img/autumncandle.jpeg') }}') no-repeat center center; background-size: cover;">
+        style="min-height: 80vh; background-color: #fffaf2;">
         <div class="row w-100 justify-content-center">
             <div class="col-md-6 col-lg-4">
-                {{-- <div class="text-center mb-5">
-                    <h1 class="display-4" style="font-family: 'Playfair Display'; color: #603700;">Lumière</h1>
-                    <p class="lead" style="color: #603700;">The Art of Sabine Scenes</p>
-                </div> --}}
-
-                <div class="card shadow-sm border-0 p-4" style="background-color: #FFF3EB; border-radius: 10px;">
+                <div class="p-4" style="background-color: transparent;">
                     <div class="card-body">
-                        <h2 class="text-center mb-4" style="color: #603700;">Login</h2>
+                        <h2 class="text-center mb-4"
+                            style="color: #603700; font-family: 'Playfair Display'; font-size: 28px;">LOGIN</h2>
 
                         <form method="GET" action="{{ route('home') }}">
                             <div class="mb-4">
                                 <input type="email" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    id="email" name="email"
-                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
+                                    name="email"
+                                    style="background-color: transparent; border-bottom: 1px solid #603700; color: #603700;"
                                     placeholder="Enter your email">
                             </div>
 
                             <div class="mb-4">
                                 <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    id="password" name="password"
-                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
+                                    name="password"
+                                    style="background-color: transparent; border-bottom: 1px solid #603700; color: #603700;"
                                     placeholder="Enter your password">
                             </div>
 
                             <div class="mb-3 text-end">
                                 <a href="{{ route('forget-password.submit') }}" class="text-decoration-none"
-                                    style="color: #603700;">Forget Password?</a>
+                                    style="color: #603700; font-size: 14px;">Forget password?</a>
                             </div>
 
                             <div class="d-grid gap-2 mb-3">
                                 <button type="submit" class="btn btn-block py-2"
-                                    style="background-color: #603700; color: white;">Login Now</button>
+                                    style="background-color: #603700; color: white; border-radius: 0;">LOGIN NOW</button>
                             </div>
 
                             <div class="text-center">
-                                <p class="mb-0" style="color: #603700;">Don't have an account?
-                                    <a href="{{ route('signup') }}" class="text-decoration-none fw-bold"
+                                <p class="mb-0" style="color: #603700; font-size: 14px;">Don’t have an account?
+                                    <a href="{{ route('signup') }}" class="fw-bold text-decoration-none"
                                         style="color: #603700;">Signup now</a>
                                 </p>
                             </div>

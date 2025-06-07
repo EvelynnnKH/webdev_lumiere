@@ -2,62 +2,88 @@
 
 @section('content')
     <div class="container-fluid d-flex justify-content-center align-items-center"
-        style="min-height: 80vh; background: url('{{ asset('img/autumncandle.jpeg') }}') no-repeat center center; background-size: cover;">
+        style="min-height: 100vh; background: white; no-repeat center center; background-size: cover;">
         <div class="row w-100 justify-content-center">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-12 col-md-8 col-lg-6">
 
-                <div class="card shadow-sm border-0 p-4" style="background-color: #FFF3EB; border-radius: 10px;">
-                    <div class="card-body">
-                        <h2 class="text-center mb-4" style="color: #603700;">Reset Password</h2>
+                <h2 class="text-center mb-5 display-3" style="color: #603700;">RESET PASSWORD</h2>
 
-                        {{-- Show success message --}}
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        {{-- Show validation errors --}}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('forget-password.submit') }}" id="resetPasswordForm">
-                            @csrf
-                            <div class="mb-4">
-                                <input type="email" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    name="email"
-                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter email address" required value="{{ old('email') }}">
-                            </div>
-
-                            <div class="mb-4">
-                                <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    name="new_password"
-                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Enter new password" required>
-                            </div>
-
-                            <div class="mb-4">
-                                <input type="password" class="form-control border-0 border-bottom rounded-0 p-0"
-                                    name="new_password_confirmation"
-                                    style="background-color: transparent; border-color: #603700 !important; color: #603700;"
-                                    placeholder="Confirm new password" required>
-                            </div>
-
-                            <div class="d-grid gap-2 mb-3">
-                                <button type="submit" class="btn btn-block py-2"
-                                    style="background-color: #603700; color: white;">Reset Password</button>
-                            </div>
-                        </form>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 1.25rem;">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 1.25rem;">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('forget-password.submit') }}" id="resetPasswordForm"
+                    style="font-size: 1.5rem;">
+                    @csrf
+                    <div class="mb-5">
+                        <input type="email"
+                            class="form-control border-0 border-bottom rounded-0 p-3 @error('email') is-invalid @enderror"
+                            name="email"
+                            style="background-color: transparent; border-color: #603700 !important; color: #603700; font-size: 1.5rem;"
+                            placeholder="Enter email address" required value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback" style="font-size: 1.1rem;">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-5">
+                        <input type="password"
+                            class="form-control border-0 border-bottom rounded-0 p-3 @error('new_password') is-invalid @enderror"
+                            name="new_password"
+                            style="background-color: transparent; border-color: #603700 !important; color: #603700; font-size: 1.5rem;"
+                            placeholder="Enter new password" required>
+                        @error('new_password')
+                            <div class="invalid-feedback" style="font-size: 1.1rem;">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-5">
+                        <input type="password"
+                            class="form-control border-0 border-bottom rounded-0 p-3 @error('new_password_confirmation') is-invalid @enderror"
+                            name="new_password_confirmation"
+                            style="background-color: transparent; border-color: #603700 !important; color: #603700; font-size: 1.5rem;"
+                            placeholder="Confirm new password" required>
+                        @error('new_password_confirmation')
+                            <div class="invalid-feedback" style="font-size: 1.1rem;">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="d-grid gap-2 mb-5">
+                        <button type="submit" class="btn py-3"
+                            style="background-color: #603700; color: white; font-size: 1.5rem;">
+                            RESET PASSWORD
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0" style="color: #603700; font-size: 1.2rem;">
+                            Remembered your password?
+                            <a href="{{ route('login') }}" class="fw-bold text-decoration-none"
+                                style="color: #603700;">Login now</a>
+                        </p>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
