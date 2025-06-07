@@ -103,7 +103,7 @@
 
 <div class="container-fluid py-5" style="background-color: #f8f4ee;">
     <div class="text-center mb-5">
-        <h2 style="font-size: 2.75rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">BEST SELLER</h2>
+        <h2 style="font-size: 2.75rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">RECOMMENDATION</h2>
     </div>
 
     <div class="row justify-content-center">
@@ -120,7 +120,6 @@
 
                     <div class="d-flex justify-content-between" style="font-size: 0.95rem;">
                         <span class="fw-bold">Rp. {{ number_format($item['price'], 0, ',', '.') }},-</span>
-                        <span class="text-muted" style="font-style: italic;">Rate: 5/5</span>
                     </div>
                         <a href="{{ route('product-detil.show', $item['id']) }}" class="btn w-100 mt-3" style="background-color: #5c3c1d; color: white; font-weight: 500;">
                             SEE MORE

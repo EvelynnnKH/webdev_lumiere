@@ -49,7 +49,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                     <strong>Order #{{ $order['order_number'] }}</strong>
-                    <span class="ms-3">{{ $order['order_date'] }}</span>
+                    <span class="ms-3">{{ $order['created_at'] }}</span>
                 </div>
                 <span class="badge order-badge bg-success">Completed</span>
             </div>
@@ -66,7 +66,7 @@
                     <div class="col-md-6">
                         <h5>Order Summary</h5>
                         <div class="ps-3">
-                            <p><strong>Order Date:</strong> {{ $order['order_date'] }}</p>
+                            <p><strong>Order Date:</strong> {{ $order['created_at'] }}</p>
                             <p><strong>Items:</strong> {{ count($order['items']) }} products</p>
                             <p><strong>Status:</strong> <span class="badge bg-success">Completed</span></p>
                         </div>

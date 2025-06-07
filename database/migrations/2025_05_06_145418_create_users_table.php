@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('zip')->nullable();
             $table->string('state')->nullable();
             $table->string('phone_number')->nullable();
-            // $table->string('role');
+            $table->string('role');
             // $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
             // $table->string('role')->default('user');
             $table->timestamps();

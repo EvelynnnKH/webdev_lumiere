@@ -1,14 +1,10 @@
 @extends('base')
 @section('content')
-    <div class="main-form min-h-screen py-8 px-4">
+    <div class="main-form min-h-screen py-8 px-4 pb-5">
     <div class="container mx-auto max-w-4xl">
-        <div class="text-center mb-8">
+        <div class="text-center mb-8 pt-5">
             <div class="header-icon">
-                <span class="plus-icon">Edit</span> 
-                {{-- If you use Font Awesome, you could do: 
-                     <i class="fas fa-pencil-alt"></i> 
-                     and remove the <span> and the CSS .plus-icon/.edit-icon logic. 
-                --}}
+                <i class="fas fa-pencil-alt"></i> 
             </div>
             <h1 class="main-title">Edit Product</h1>
         </div>
@@ -87,14 +83,14 @@
                         <div class="form-group">
                         <label for="image_url" class="form-label">Product Image</label>
                         <div class="file-upload-container">
-                            <input type="file" name="image_url" id="image_url" class="file-input @error('image_url') error @enderror" accept="image/*" required>
+                            <input type="file" name="image_url" id="image_url" class="file-input @error('image_url') error @enderror" accept="image/*">
                             <label for="image_url" class="file-label flex items-center justify-center">
                                 <span class="file-label-text" style="{{ $product->image_url ? 'display: none;' : '' }}">Choose Image File</span>
-                                <div class="image-preview-wrapper absolute top-0 left-0 w-full h-full overflow-hidden rounded-md">
+                                <div class="image-preview-wrapper absolute top-0 left-0 w-full h-full overflow-hidden rounded-md" style="{{ $product->image_url ? 'display: block;' : 'display: none;' }}">
                                     <img id="image_preview"
-                                    src="{{ $product->image_url ? asset('productimages/' . $product->image_url) : '#' }}"
-                                    alt="Image Preview"
-                                    style="{{ $product->image_url ? '' : 'display: none;' }} max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        src="{{ $product->image_url ? asset('productimages/'.$product->image_url) : '#' }}"
+                                        alt="Image Preview"
+                                        style="max-width: 200px; max-height: 200px; object-fit: cover;">
                                 </div>
                             </label>
                         </div>
@@ -102,15 +98,15 @@
                         <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
-                    </div>
-
-                    <div class="submit-section">
+                    
+                    <div>
                         <button type="submit" class="btn-primary">
                             Update Product
                             <div class="btn-shine"></div>
                         </button>
-                        <a href="{{ route('product') }}" class="btn-cancel">Cancel</a> {{-- Sesuaikan route ini jika ada route lain untuk daftar produk --}}
                     </div>
+
+                    <a href="{{ route('product') }}" class="btn-cancel">Cancel</a> 
                 </form>
             </div>
         </div>
@@ -259,7 +255,7 @@ margin-top: 1rem;
 position: relative; display: inline-flex;
 align-items: center; justify-content: center;
 width: 100%; padding: 16px 32px;
-background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+background:  #5c3c1d;
 color: white; border: none; border-radius: 12px;
 font-weight: 600; font-size: 1.1rem;
 cursor: pointer; transition: all 0.3s ease;
@@ -270,13 +266,25 @@ letter-spacing: 0.05em; font-family: inherit;
 .btn-primary:hover {
 transform: translateY(-2px);
 box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
-background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+background:  rgb(169, 109, 48);
 }
-.btn-shine {
-position: absolute; top: 0; left: -100%;
-width: 100%; height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-transition: left 0.5s;
+.btn-cancel {
+position: relative; display: inline-flex;
+align-items: center; justify-content: center;
+width: 100%; padding: 16px 32px;
+background:  #ce9f6a;
+color: white; border: none; border-radius: 12px;
+font-weight: 600; font-size: 1.1rem;
+cursor: pointer; transition: all 0.3s ease;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+overflow: hidden; text-transform: uppercase;
+letter-spacing: 0.05em; font-family: inherit;
+text-decoration:   none;
+}
+.btn-cancel:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+background:  #e6b681;
 }
 .btn-primary:hover .btn-shine { left: 100%; }
 /* Responsive Design */

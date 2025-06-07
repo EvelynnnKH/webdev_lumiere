@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Midtrans\Config;
+use Midtrans\Snap;
+
 
 class OrderController extends Controller
 {
@@ -94,7 +97,7 @@ public function showHistory()
 
      public function index()
     {
-        $orders = Orders::with('user')->get();
+        $orders = Orders::with('user')->orderBy('created_at', 'desc')->get();
         return view('allorder', compact('orders'));
     }
 
@@ -261,10 +264,10 @@ public function showAllOrderDetails($orderNumber)
             CartItem::where('cart_id', $cart->cart_id)->delete();
 
             // Midtrans Config
-            Config::$serverKey = config('midtrans.server_key');
+            Config::$serverKey = config('midtrans.server_key'); // HARUS server key
             Config::$isProduction = config('midtrans.is_production');
-            Config::$isSanitized = true;
-            Config::$is3ds = true;
+            Config::$isSanitized = config('midtrans.is_sanitized');
+            Config::$is3ds = config('midtrans.is_3ds');
  
             // Create Midtrans Transaction
             $params = [
@@ -281,7 +284,7 @@ public function showAllOrderDetails($orderNumber)
                     'finish' => route('order.confirmation', ['order_id' => $order->order_id]),
                 ]
             ];
- 
+            
             $snapUrl = Snap::createTransaction($params)->redirect_url;
             // Save Payment URL
             $order->payment_url = $snapUrl;

@@ -3,7 +3,7 @@
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 
-<div class="container mt-5">
+<div class="container my-5">
     <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">ORDER HISTORY</h2>
     <div class="card shadow-sm border-0">
         <div class="card-body">
@@ -24,7 +24,7 @@
                         <tr style="background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border-radius: 12px;">
                             <td class="px-3 py-3">{{ $order->order_id }}</td>
                             <td class="px-3 py-3">{{ $order->user->name ?? 'N/A' }}</td>
-                            <td class="px-3 py-3">{{ $order->order_date }}</td>
+                            <td class="px-3 py-3">{{ $order->created_at }}</td>
                             <td class="px-3 py-3">Rp {{ number_format($order->total_price, 0, ',', '.') }},-</td>
                             <td class="px-3 py-3">
                                 <span class="badge-custom {{ 'badge-' . strtolower($order->status) }}">
@@ -68,6 +68,7 @@ body {
     min-width: 90px;
     display: inline-block;
     text-align: center;
+    width: 120px;
 }
 
 .badge-completed    { background: #d4edda; color: #155724; }

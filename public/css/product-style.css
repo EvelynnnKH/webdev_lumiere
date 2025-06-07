@@ -257,15 +257,26 @@ h1 {
     max-width: 280px;
 }
 
+@media (min-width: 1400px) {
+    .top-bar{
+        display: none;
+    }
+}
 
 @media (max-width: 1400px) {
     .product-grid {
         grid-template-columns: repeat(4, 1fr);
     }
+    .top-bar{
+        display: none;
+    }
 }
 @media (max-width: 1150px) {
     .product-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+        .top-bar{
+        display: none;
     }
 }
 @media (max-width: 850px) {
@@ -278,10 +289,22 @@ h1 {
         min-width: unset;
         height: auto; /* biar fleksibel */
     }
+    .category-menyamping{
+        display: none;
+    }
+    .top-bar{
+        display:block;
+    }
 }
 @media (max-width: 600px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr); /* terakhir jadi 2 */
+    }
+    .category-menyamping{
+        display: none;
+    }
+    .top-bar{
+        display:block;
     }
 }
 
@@ -289,5 +312,11 @@ h1 {
 @media (max-width: 480px) {
     .product-grid {
         grid-template-columns: repeat(1, 1fr);
+    }
+        .category-menyamping{
+        display: none;
+    }
+    .top-bar{
+        display:block;
     }
 }

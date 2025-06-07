@@ -30,10 +30,27 @@
         font-weight: bold;
     }
 
-    .order-badge {
+    .badge-custom {
         font-size: 0.9rem;
         padding: 0.35rem 0.65rem;
+        color: white;
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
     }
+
+    .badge-completed    { background: #d4edda; color: #155724; }
+.badge-pending      { background: #fff3cd; color: #856404; }
+.badge-cancelled    { background: #f8d7da; color: #721c24; }
+.badge-shipped,
+.badge-delivered,
+.badge-processing   { background: #e2e3e5; color: #383d41; }
+.badge-default      { background: #eeeeee; color: #333; }
+
+.btn-primary{
+    background-color: #4b2e1a;
+}
 </style>
 
 <div class="order-details-page">
@@ -49,9 +66,11 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                     <strong>Order {{ $order->order_number }} </strong>
-                    <span class="ms-3">{{ $order->order_date }}</span>
+                    <span class="ms-3">{{ $order->created_at }}</span>
                 </div>
-                <span class="badge order-badge bg-success">Completed</span>
+                <span class="badge-custom {{ 'badge-' . strtolower($order->status) }}">
+                                    {{ $order->status }}
+                                </span>
             </div>
             <div class="card-body">
                 <div class="row mb-4">
@@ -66,9 +85,11 @@
                     <div class="col-md-6">
                         <h5>Order Summary</h5>
                         <div class="ps-3">
-                            <p><strong>Order Date:</strong> {{ $order->order_date }}</p>
+                            <p><strong>Order Date:</strong> {{ $order->created_at }}</p>
                             <p><strong>Items:</strong> {{ count($order->items) }} products</p>
-                            <p><strong>Status:</strong> <span class="badge bg-success">Completed</span></p>
+                            <p><strong>Status:</strong><span class="badge-custom {{ 'badge-' . strtolower($order->status) }}">
+                                    {{ $order->status }}
+                                </span></p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +107,7 @@
                     <tbody>
                         @foreach($order->items as $item)
                         <tr>
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->product->name }}</td>
                             <td class="text-center">{{ $item->quantity }}</td>
                             <td class="text-end">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                             <td class="text-end">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
