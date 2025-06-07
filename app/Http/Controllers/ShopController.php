@@ -289,37 +289,47 @@ class ShopController extends Controller
     }
 
     // ADD TO WISHLIST
-    public function addToWishlist(Request $request, $product_id)
-    {
-        if (!Auth::check()) {
-            return redirect()->back()->with('error', 'Anda harus login untuk menambahkan ke wishlist.');
-        }
-
-        $product = Product::findOrFail($product_id);
-        $userId = Auth::id();
-        $quantity = $request->input('quantity', 1);
-
-        $wishlist = Wishlist::firstOrCreate(
-            ['user_id' => $userId],
-            ['status_del' => false]
-        );
-
-        $existingWishlistItem = $wishlist->wishlistItems()
-                                        ->where('product_id', $product->product_id)
-                                        ->first();
-
-        if ($existingWishlistItem) {
-            return redirect()->back()->with('info', 'Produk ini sudah ada di wishlist Anda.');
-        } else {
-            WishlistItem::create([
-                'wishlist_id' => $wishlist->wishlist_id,
-                'product_id' => $product->product_id,
-                'quantity' => $quantity,
-                'status_del' => false,
-            ]);
-            return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke wishlist!');
-        }
+    // ADD / REMOVE TO WISHLIST (TOGGLE)
+public function addToWishlist(Request $request, $product_id)
+{
+    if (!Auth::check()) {
+        return redirect()->back()->with('error', 'Anda harus login untuk mengelola wishlist.');
     }
+
+    $product = Product::findOrFail($product_id);
+    $userId = Auth::id();
+    $quantity = $request->input('quantity', 1);
+
+    // Cari atau buat wishlist user
+    $wishlist = Wishlist::firstOrCreate(
+        ['user_id' => $userId],
+        ['status_del' => false]
+    );
+
+    // Cek apakah produk sudah ada dan belum dihapus (status_del = false)
+    $existingWishlistItem = $wishlist->wishlistItems()
+                                     ->where('product_id', $product->product_id)
+                                     ->where('status_del', false)
+                                     ->first();
+
+    if ($existingWishlistItem) {
+        // Kalau sudah ada → soft delete (hapus)
+        $existingWishlistItem->status_del = true;
+        $existingWishlistItem->save();
+
+        return redirect()->back()->with('success', 'Produk berhasil dihapus dari wishlist!');
+    } else {
+        // Kalau belum ada → tambahkan
+        WishlistItem::create([
+            'wishlist_id' => $wishlist->wishlist_id,
+            'product_id' => $product->product_id,
+            'quantity' => $quantity,
+            'status_del' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke wishlist!');
+    }
+}
 
     // REMOVE FROM WISHLIST
     public function removeFromWishlist($product_id)
@@ -374,4 +384,20 @@ class ShopController extends Controller
 
     return view('cart', compact('cart', 'total'));
 }
+
+    public function loadMore(Request $request)
+    {
+        $offset = $request->input('offset', 0);
+        $limit = 24;
+
+        $products = Product::with('category')
+                    ->skip($offset)
+                    ->take($limit)
+                    ->get();
+
+        return response()->json([
+            'products' => $products
+        ]);
+    }
+
 }

@@ -118,6 +118,9 @@ Route::post('/login_auth', [AuthController::class, 'login_auth'])
 Route::get('/product', [ShopController::class, 'show_product'])
     ->name('product');
 
+Route::get('/products/load-more', [ShopController::class, 'loadMore'])->name('products.loadMore');
+
+
 Route::get('/searched', [ShopController::class, 'showBySearch'])
     ->name('searched');
 

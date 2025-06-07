@@ -1,10 +1,24 @@
 <head>
     <link rel="stylesheet" href="{{ asset('css/product-detil-style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     @extends('base')
-
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3" role="alert" style="min-width: 300px;">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow-lg z-3" role="alert" style="min-width: 300px;">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     @section('content')
+    
     {{-- <div class="back-container">
         <a href="{{ url()->previous() }}" class="back-button" title="Back">
              ←
@@ -40,11 +54,31 @@
                 </form>
                 @endcan
                 @can('wishlist-product')
-                    <form action="{{ route('add_to_wishlist', ['product_id' => $product->product_id]) }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="quantity" id="hidden-quantity" value="1">
-                    <button type="submit" class="add-to-wishlist-btn">Add to Wishlist</button>
-                    </form>
+                            @if (Auth::check())
+                        @php
+                            $wishlist = \App\Models\Wishlist::where('user_id', auth()->id())->first();
+                            $isInWishlist = $wishlist
+                                ? $wishlist->wishlistItems()
+                                        ->where('product_id', $product->product_id)
+                                        ->where('status_del', false)
+                                        ->exists()
+                                : false;
+                        @endphp
+
+                        <div class="align-items-center">
+                            <form action="{{ route('add_to_wishlist', ['product_id' => $product->product_id]) }}" method="POST" class="m-0">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn border-0 bg-transparent p-0 m-0">
+                                    @if ($isInWishlist)
+                                        <img src="{{ asset('img/filled.png') }}" style="width: 30px; height: 30; margin:10px;">
+                                    @else
+                                        <img src="{{ asset('img/blank.png') }}" style="width: 30px; height: 30; margin:10px;">
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 @endcan
                 
                 @can('edit-product')

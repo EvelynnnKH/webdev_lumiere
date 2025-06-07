@@ -1,6 +1,9 @@
 <head>
     <link rel="stylesheet" href="{{ asset('css/product-style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
 <body>
     @extends('base')
@@ -43,33 +46,68 @@
             </div>
         </div>
 
-
-
         <!-- Grid Produk -->
-        <div class="product-grid">
+        <div id="product-container" class="product-grid">
+            {{-- Semua produk dimuat di awal --}}
             @foreach ($products as $p)
-                <a href="{{ route('product-detil.show', $p->product_id) }}" class="product-card">
-                    <div class="card-image-wrapper">
-                        <img src="{{ asset('productimages/'.$p->image_url) }}" alt="{{ $p->name }}">
-                    </div>
-                    <p class="product-category">{{ $p->category->name }}</p>
-                    <p class="product-name" style="font-size: 1.1rem; font-family: 'Playfair Display'">{{ $p->name }}</p>
-                    <p class="card-description">{{ $p->description }}</p>
-                    <div class="price-rate">
-                        <p class="product-price">Rp. {{ number_format($p->price, 0, ',', '.') }},-</p>
-                        <p class="product-rate">Rate: 5/5</p>
-                    </div>
-                </a>
+                <div class="product-item d-none">
+                    @include('partials.product-card', ['p' => $p])
+                </div>
             @endforeach
         </div>
+
+        <!-- Pagination controls -->
+        <div class="text-center p-3 d-flex justify-content-center align-items-center gap-3 paging">
+            <button id="prev-btn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm" disabled>&lt; Previous</button>
+            <span id="page-indicator">1 / 1</span>
+            <button id="next-btn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm">Next &gt;</button>
+        </div>
+        
     </div>
-</div>
+
 <script>
     function goToCategory(url) {
         if (url) {
             window.location.href = url;
         }
     }
+
+    const itemsPerPage = 8;
+    const items = document.querySelectorAll('.product-item');
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+
+    let currentPage = 1;
+
+    const renderPage = (page) => {
+        items.forEach((item, index) => {
+            item.classList.add('d-none');
+            if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+                item.classList.remove('d-none');
+            }
+        });
+
+        document.getElementById('page-indicator').innerText = `${page} / ${totalPages}`;
+        document.getElementById('prev-btn').disabled = page === 1;
+        document.getElementById('next-btn').disabled = page === totalPages;
+    };
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    // Initial render
+    renderPage(currentPage);
+
 </script>
 
 

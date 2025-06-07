@@ -117,6 +117,29 @@ h1 {
     justify-content: start; /* posisi ke kiri */
 }
 
+.paging{
+    background-color: #f8f4ee;
+    justify-content: start;
+}
+
+.text-brown {
+  color: #4b2e1a !important;
+}
+.border-brown {
+  border-color: #4b2e1a !important;
+}
+.btn-outline-secondary:hover {
+  background-color: #4b2e1a;
+  color: white;
+}
+
+.btn-outline-custom:hover {
+  color: #fff !important;
+  background-color: #4b2e1a !important;
+  border-color: #4b2e1a !important;
+}
+
+
 .product-category{
     font-style: italic;
     font-size: 0.9rem;
@@ -220,6 +243,20 @@ h1 {
     object-position: center;  /* fokus tengah gambar */
     display: block;
 }
+
+.swiper {
+    width: 100%;
+    padding: 20px 0;
+}
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}
+.product-card {
+    width: 100%;
+    max-width: 280px;
+}
+
 
 @media (max-width: 1400px) {
     .product-grid {

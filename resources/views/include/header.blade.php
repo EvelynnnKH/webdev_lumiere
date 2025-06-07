@@ -26,7 +26,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
                         <form action="{{ route('logout') }}" method="POST" class="logout-form">
                             @csrf
-                            <button type="submit" class="logout-button">Logout</button>
+                            <button type="submit" class="logout-button">LOGOUT</button>
                         </form>
 
                     </ul>
@@ -40,7 +40,7 @@
 
             @guest
             <li class="nav-item login-nav" style="margin: auto;">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                <a class="nav-link" href="{{ route('login') }}">LOGIN</a>
             </li>
             @endguest
             </div>
@@ -49,16 +49,16 @@
                 <div class="collapse navbar-collapse w-80" id="navbarCollapseMenu">
                     {{-- KIRI --}}
                     <ul class="navbar-nav d-flex flex-lg-row flex-column gap-3 mt-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house me-1"></i>Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('product') }}"><i class="fa-solid fa-store me-1"></i>Our Collection</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house me-1"></i>HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('product') }}"><i class="fa-solid fa-store me-1"></i>OUR COLLECTION</a></li>
                             @can('view-myorder')
                                 <li class="nav-item"><form action="{{ route('order.history') }}" method="GET" class="mb-0 myorders">@csrf
-                                <button type="submit" class="btn btn-link nav-link p-0"><i class="fas fa-receipt me-1"></i>My Orders</button>
+                                <button type="submit" class="btn btn-link nav-link p-0"><i class="fas fa-receipt me-1"></i>MY ORDERS</button>
                             </form></li>
                             @endcan
                             @can('view-allorder')
                                 <li class="nav-item"><form action="{{ route('orders.show') }}" method="GET" class="mb-0 myorders">@csrf
-                                <button type="submit" class="btn btn-link nav-link p-0"><i class="fas fa-receipt me-1"></i>All Orders</button>
+                                <button type="submit" class="btn btn-link nav-link p-0"><i class="fas fa-receipt me-1"></i>ALL ORDERS</button>
                             </form></li>
                         @endcan
                     </ul>
@@ -66,10 +66,10 @@
                     {{-- KANAN --}}
                     <ul class="navbar-nav d-flex flex-lg-row flex-column gap-3 ms-lg-auto mb-0 mt-3 mt-lg-0">
                             @can('wishlist-product')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('view_wishlist') }}"><i class="fa-solid fa-heart me-1"></i>Wishlist</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('view_wishlist') }}"><i class="fa-solid fa-heart me-1"></i>WISHLIST</a></li>
                             @endcan
                             @can('addToCart-product')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('view_cart') }}"><i class="fas fa-cart-shopping me-1"></i>Cart</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('view_cart') }}"><i class="fas fa-cart-shopping me-1"></i>CART</a></li>
                             @endcan
                     </ul>
 
