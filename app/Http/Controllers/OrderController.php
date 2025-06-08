@@ -326,11 +326,11 @@ public function showAllOrderDetails($orderNumber)
 
         // Update status based on Midtrans response
         if (in_array($transactionStatus, ['capture', 'settlement'])) {
-            $order->status = 'completed';
+            $order->status = 'Completed';
         } elseif ($transactionStatus === 'pending') {
-            $order->status = 'pending';
+            $order->status = 'Pending';
         } elseif (in_array($transactionStatus, ['deny', 'cancel', 'expire', 'failure'])) {
-            $order->status = 'failed';
+            $order->status = 'Failed';
         }
 
         $order->save();
