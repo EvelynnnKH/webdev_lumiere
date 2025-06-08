@@ -105,16 +105,7 @@ box-sizing: border-box;
 .main-form {
 background: #f8f4ee;
 position: relative;
-font-family: montserrat;
-}
-.main-form::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0; bottom: 0;
-background-image:
-radial-gradient(circle at 25% 25%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
-radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
-pointer-events: none;
+font-family:  'Montserrat', Helvetica, sans-serif !important;
 }
 .container {
 position: relative; z-index: 1;
@@ -160,9 +151,9 @@ width: 100%; padding: 12px 16px;
 border: 2px solid #e5e7eb; border-radius: 12px;
 font-size: 1rem; transition: all 0.3s ease;
 background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-font-family: inherit;
+font-family:  'Montserrat', Helvetica, sans-serif !important;
 }
-.form-input:focus {
+/* .form-input:focus {
 outline: none; border-color: #f59e0b;
 box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
 transform: translateY(-1px);
@@ -170,7 +161,7 @@ transform: translateY(-1px);
 .form-input.error {
 border-color: #ef4444;
 box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
+} */
 .form-input::placeholder { color: #9ca3af; }
 textarea.form-input { resize: vertical; min-height: 120px; }
 select.form-input {
@@ -240,24 +231,18 @@ margin-top: 1rem;
 position: relative; display: inline-flex;
 align-items: center; justify-content: center;
 width: 100%; padding: 16px 32px;
-background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+background:  #5c3c1d;
 color: white; border: none; border-radius: 12px;
 font-weight: 600; font-size: 1.1rem;
 cursor: pointer; transition: all 0.3s ease;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 overflow: hidden; text-transform: uppercase;
-letter-spacing: 0.05em; font-family: inherit;
+letter-spacing: 0.05em; font-family: 'Montserrat', Helvetica, sans-serif !important;
 }
 .btn-primary:hover {
 transform: translateY(-2px);
 box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
-background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-}
-.btn-shine {
-position: absolute; top: 0; left: -100%;
-width: 100%; height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-transition: left 0.5s;
+background:  rgb(169, 109, 48);
 }
 .btn-primary:hover .btn-shine { left: 100%; }
 /* Responsive Design */

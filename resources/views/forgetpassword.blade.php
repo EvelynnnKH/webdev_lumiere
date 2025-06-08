@@ -9,13 +9,6 @@
                 <div class="form-wrapper p-4" style="background-color: transparent; max-width: 540px; margin: auto; font-size: 1.1rem;">
                     <h2 class="text-center mb-4" style="color: #603700; font-family: 'Playfair Display'; font-size: 28px;">RESET PASSWORD</h2>
 
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 1.1rem;">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 1.1rem;">
                             <ul class="mb-0">

@@ -191,7 +191,7 @@ class ShopController extends Controller
         if ($cartItem) {
             $cartItem->quantity += $quantity;
             $cartItem->save();
-            $message = 'Kuantitas produk di keranjang berhasil diperbarui!';
+            $message = 'Successfully added more quantity!';
         } else {
             CartItem::create([
                 'cart_id' => $cart->cart_id,
@@ -225,10 +225,10 @@ class ShopController extends Controller
                 $cartItem->status_del = true;
                 $cartItem->save();
 
-                return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang!');
+                return redirect()->back()->with('success', 'Product Successfully Added To Cart!');
             }
         }
-        return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang Anda.');
+        return redirect()->back()->with('error', 'Product Not Available In Cart.');
     }
 
     // VIEW FOR CART
@@ -272,7 +272,7 @@ class ShopController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Jumlah produk diperbarui.');
+        return redirect()->back()->with('success', 'Product quantity updated.');
     }
 
     // REMOVE CART ITEM
@@ -285,7 +285,7 @@ class ShopController extends Controller
                 $cartItem->save();
             }
 
-            return redirect()->back()->with('success', 'Item berhasil dihapus (soft delete).');
+            return redirect()->back()->with('success', 'Product removed from cart successfully');
     }
 
     // ADD TO WISHLIST
@@ -293,7 +293,7 @@ class ShopController extends Controller
 public function addToWishlist(Request $request, $product_id)
 {
     if (!Auth::check()) {
-        return redirect()->back()->with('error', 'Anda harus login untuk mengelola wishlist.');
+        return redirect()->back()->with('error', 'Please login before adding product to wishlist!');
     }
 
     $product = Product::findOrFail($product_id);
@@ -317,7 +317,7 @@ public function addToWishlist(Request $request, $product_id)
         $existingWishlistItem->status_del = true;
         $existingWishlistItem->save();
 
-        return redirect()->back()->with('success', 'Produk berhasil dihapus dari wishlist!');
+        return redirect()->back()->with('success', 'Product removed from wishlist successfully!');
     } else {
         // Kalau belum ada → tambahkan
         WishlistItem::create([
@@ -327,7 +327,7 @@ public function addToWishlist(Request $request, $product_id)
             'status_del' => false,
         ]);
 
-        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke wishlist!');
+        return redirect()->back()->with('success', 'Product successfully added to wishlist!');
     }
 }
 
@@ -335,7 +335,7 @@ public function addToWishlist(Request $request, $product_id)
     public function removeFromWishlist($product_id)
     {
         if (!Auth::check()) {
-            return redirect()->back()->with('error', 'Anda harus login untuk menghapus dari wishlist.');
+            return redirect()->back()->with('error', 'Please login before adding product to wishlist.');
         }
 
         $userId = Auth::id();
@@ -348,10 +348,10 @@ public function addToWishlist(Request $request, $product_id)
             if ($wishlistItem) {
                 $wishlistItem->status_del = true;
                 $wishlistItem->save();
-                return redirect()->back()->with('success', 'Produk berhasil dihapus dari wishlist!');
+                return redirect()->back()->with('success', 'Product removed from wishlist successfully!');
             }
         }
-        return redirect()->back()->with('error', 'Produk tidak ditemukan di wishlist Anda.');
+        return redirect()->back()->with('error', 'Product not found on wishlist.');
     }
 
     // VIEW FOR WISHLIST

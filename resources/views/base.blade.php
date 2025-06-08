@@ -75,6 +75,9 @@
     <title>Lumière</title>
 </head>
 <body>
+    <div style="position: fixed; top: 0; right: 0; z-index: 1050;">
+        @include('include.flash')
+    </div>
     @include('include.header')
     <main class="" >
         @yield('content')
