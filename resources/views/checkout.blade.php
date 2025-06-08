@@ -73,8 +73,7 @@
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" required><?php if(Auth::user()->phone_number != null)?>{{{ Auth::user()->address }}}
-                            </textarea>
+                            <textarea class="form-control" id="address" name="address" rows="3" required><?php if(Auth::user()->phone_number != null)?>{{{ Auth::user()->address }}}</textarea>
                         </div>
                         {{-- <div class="col-md-6">
                             <label for="city" class="form-label">City</label>
@@ -116,18 +115,12 @@
                         Bank Transfer
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="cod">
-                    <label class="form-check-label" for="cod">
-                        Cash on Delivery
-                    </label>
-                </div>
             </div>
         </div>
 
         <!-- Order Summary -->
         <div class="col-lg-5">
-            <div class="summary-card p-4 sticky-top" style="top: 20px;">
+            <div class="summary-card p-4" style="top: 20px;">
                 <h4 class="fw-bold mb-4">Order Summary</h4>
                 
                 <!-- Products List -->

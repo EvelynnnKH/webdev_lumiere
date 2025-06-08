@@ -205,10 +205,18 @@ public function showAllOrderDetails($orderNumber)
             // 'city' => 'required|string|max:255',
             // 'state' => 'required|string|max:255',
             // 'zip' => 'required|string|max:10',
+        ],[
+            'address.required' => 'Please fill your address.',
+            'description.max' => 'Address max 255 characters.',
+            'phone.required' => 'Phone number must be filler.',
+            'phone.numeric' => 'Harga harus berupa angka.',
         ]);
 
         // Calculate totals
+        $user->address = $request->address;
+        $user->phone_number = $request->phone;
 
+        $user->save();
         
         $subtotal = $cart->cartItems->sum(function($item) {
              Log::info($item->product); 
@@ -302,6 +310,42 @@ public function showAllOrderDetails($orderNumber)
             dd($e->getMessage());
             return redirect()->back()->with('error', 'Failed to place order. Please try again.');
         }
+    }
+
+     public function updatePayment($orderNumber){
+        $order = Orders::where('order_number', $orderNumber)->first();
+        $newOrderId = $order->order_id . '-' . now()->timestamp;
+
+         Config::$serverKey = config('midtrans.server_key'); // HARUS server key
+            Config::$isProduction = config('midtrans.is_production');
+            Config::$isSanitized = config('midtrans.is_sanitized');
+            Config::$is3ds = config('midtrans.is_3ds');
+ 
+            // Create Midtrans Transaction
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $order->order_id,
+                    'gross_amount' => (int) $order->total_price,
+                ],
+                'customer_details' => [
+                    'name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                    'phone' => Auth::user()->phone,
+                ],
+				'callbacks' => [
+                    'finish' => route('order.confirmation', ['order_id' => $order->order_id]),
+                ]
+            ];
+            
+            $snapUrl = Snap::createTransaction($params)->redirect_url;
+            // Save Payment URL
+            $order->payment_url = $snapUrl;
+            $order->status = 'Completed';
+            $order->save();
+            return redirect($snapUrl);
+
+            return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
+                ->with('success', 'Order placed successfully!');
     }
 
     public function showConfirmation($order_id)

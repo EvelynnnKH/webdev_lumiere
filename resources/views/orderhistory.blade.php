@@ -210,6 +210,13 @@
         font-style: italic;
         padding: 0.5rem;
     }
+    .badge-completed    { background: #d4edda; color: #155724; }
+.badge-pending      { background: #fff3cd; color: #856404; }
+.badge-cancelled    { background: #f8d7da; color: #721c24; }
+.badge-shipped,
+.badge-delivered,
+.badge-processing   { background: #e2e3e5; color: #383d41; }
+.badge-default      { background: #eeeeee; color: #333; }
 </style>
 
 <div class="order-history-container py-5">
@@ -232,9 +239,9 @@
             <div class="order-card-header">
                 <div>
                     <span class="order-number">Order #{{ $order->order_number }}</span>
-                    <span class="order-date ms-2">{{ $order->order_date }}</span>
+                    <span class="order-date ms-2">{{ $order->created_at }}</span>
                 </div>
-                <span class="badge order-badge bg-success">{{ ucfirst($order->status) }}</span>
+                <span class="badge order-badge badge-custom {{ 'badge-' . strtolower($order->status) }}" style="width: 120px;">{{ $order->status }}</span>
             </div>
             
             <div class="order-card-body">

@@ -54,12 +54,12 @@ class AuthController extends Controller
         ]);
 
         $role = UserRole::where('role', 'user')->first();
-
+        
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role_id' => $role ? $role->id : 1,
+            'role' => 'user',
         ]);
 
         return redirect()->route('login')->with('success', 'Account created successfully! Please login.');

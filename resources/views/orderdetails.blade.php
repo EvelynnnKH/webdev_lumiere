@@ -6,6 +6,15 @@
     body { 
         background-color: #f8f4ee;
     }
+    .btn_danger {
+    background-color: #7c5126;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: white;
+}
     
     .order-details-page {
         max-width: 1200px;
@@ -95,6 +104,13 @@
         border-bottom: 1px solid #eee;
         vertical-align: middle;
     }
+        .badge-completed    { background: #d4edda; color: #155724; }
+.badge-pending      { background: #fff3cd; color: #856404; }
+.badge-cancelled    { background: #f8d7da; color: #721c24; }
+.badge-shipped,
+.badge-delivered,
+.badge-processing   { background: #e2e3e5; color: #383d41; }
+.badge-default      { background: #eeeeee; color: #333; }
 </style>
 
 <div class="order-details-page py-5">
@@ -109,7 +125,7 @@
                     <span class="order-number">Order #{{ $order['order_number'] }}</span>
                     <span class="order-date ms-2">{{ $order['created_at'] }}</span>
                 </div>
-                <span class="badge order-badge bg-success">Completed</span>
+                <span class="badge order-badge badge-custom {{ 'badge-' . strtolower($order->status) }}" style="width: 120px;">{{ $order->status }}</span>
             </div>
 
             <div class="card-body">
@@ -127,7 +143,7 @@
                         <div class="mt-3">
                             <p><strong>Order Date:</strong> {{ $order['created_at'] }}</p>
                             <p><strong>Items:</strong> {{ count($order['items']) }} products</p>
-                            <p><strong>Status:</strong> <span class="order-detail-badge bg-success" style="color: white;"><strong>Completed</strong></span></p>
+                            <p><strong>Status:</strong> <span class="order-detail-badge badge-custom {{ 'badge-' . strtolower($order->status) }}" style="width: 120px;">{{ $order->status }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -174,6 +190,14 @@
                             <td colspan="3" class="text-end" style="color: #5c3c1d;">Total</td>
                             <td class="text-end" style="color: #5c3c1d;">Rp. {{ number_format($total, 0, ',', '.') }},-</td>
                         </tr>
+                        @if ( $order->status != 'Completed')
+                            <tr class="fw-bold">
+                                <form action="{{ route('continue_payment', ['order_number' => $order->order_number]) }}" method="POST">
+                                    @csrf
+                                    <td colspan="4" class="text-end" style="color: #5c3c1d;"><button action= submit class="btn_danger">Pay</button></td>
+                                </form>
+                            </tr>
+                        @endif
                     </tfoot>
                 </table>
             </div>

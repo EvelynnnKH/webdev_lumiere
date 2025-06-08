@@ -100,6 +100,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
 
+        Route::post('/continue-payment/{order_number}', [OrderController::class, 'updatePayment'])->name('continue_payment');
+
         // Orders
 
         Route::get('/order/confirmation/{order_id}', [OrderController::class, 'showConfirmation'])->name('order.confirmation');
