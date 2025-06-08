@@ -60,6 +60,29 @@
         transform: translateY(-2px);
         color:white;
     }
+    /* Responsif untuk tablet */
+    @media (min-width: 1185px) {
+        .div-quantity-small{
+            display: none;
+        }
+    }
+    @media (max-width: 750px) {
+        .div-quantity{
+            display: none;
+        }
+    }
+    /* Responsif untuk mobile */
+    @media (max-width: 750px) {
+        .div-quantity{
+            display: none;
+        }
+    }
+    @media (min-width: 750px) {
+        .div-quantity-small{
+            display: none;
+        }
+    }
+
 </style>
 
 <div class="container py-5" style="font-family: 'Playfair Display'; color: #5c3c1d;">
@@ -84,7 +107,7 @@
             @endphp
             <div class="row align-items-center border-bottom py-3">
                 {{-- Product --}}
-                <div class="col-md-5 d-flex align-items-center">
+                <div class="col-lg-5 col-md-5 d-flex align-items-center">
                     <img src="{{ asset('productimages/' . $item->product->image_url) }}"
                          alt="{{ $item->product->name }}"
                          style="width: 80px; height: 80px; object-fit: cover;"
@@ -96,20 +119,21 @@
                 </div>
 
                 {{-- Quantity --}}
-                <div class="col-md-2 text-center" style="font-family: 'Montserrat', sans-serif;">{{ $qty }}</div>
+                <div class="col-lg-2 col-md-2 col-sm-12 div-quantity-small p-2" style="font-family: 'Montserrat', sans-serif;">Ordered: {{ $qty }}x</div>
+                <div class="col-lg-2 col-md-2 text-center div-quantity" style="font-family: 'Montserrat', sans-serif;">{{ $qty }}</div>
 
                 {{-- Price --}}
-                <div class="col-md-2 text-end d-none d-md-block" style="font-family: 'Montserrat', sans-serif;">
+                <div class="col-lg-2 col-md-2 text-end d-none d-md-block" style="font-family: 'Montserrat', sans-serif;">
                     Rp. {{ number_format($price, 0, ',', '.') }},-
                 </div>
 
                 {{-- Total --}}
-                <div class="col-md-2 text-end" style="font-family: 'Montserrat', sans-serif;">
+                <div class="col-lg-2 col-md-3 text-end" style="font-family: 'Montserrat', sans-serif;">
                     Rp. {{ number_format($subtotal, 0, ',', '.') }},-
                 </div>
 
                 {{-- Remove --}}
-                <div class="col-md-1 text-end d-flex align-items-center" style="font-family: 'Montserrat', sans-serif;">
+                <div class="col-lg-1 col-md-12 text-end d-lg-flex align-items-center py-2" style="font-family: 'Montserrat', sans-serif;">
                     <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Delete this item?')">
                         @csrf
                         @method('DELETE')
