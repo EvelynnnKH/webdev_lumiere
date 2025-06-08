@@ -305,16 +305,43 @@ public function showAllOrderDetails($orderNumber)
     }
 
     public function showConfirmation($order_id)
-    {
-        $order = Orders::with('orderItems.product')->findOrFail($order_id);
-        
-        // Verify the order belongs to the authenticated user
-        if ($order->user_id !== Auth::id()) {
-            abort(403);
+{
+    $order = Orders::with('orderItems.product')->findOrFail($order_id);
+
+    // Verify the order belongs to the authenticated user
+    if ($order->user_id !== Auth::id()) {
+        abort(403);
+    }
+
+    // Midtrans Config
+    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+    \Midtrans\Config::$isProduction = config('midtrans.is_production');
+    \Midtrans\Config::$isSanitized = true;
+    \Midtrans\Config::$is3ds = true;
+
+    try {
+        // Get the payment status from Midtrans
+        $midtransStatus = \Midtrans\Transaction::status($order->order_id);
+        $transactionStatus = $midtransStatus->transaction_status;
+
+        // Update status based on Midtrans response
+        if (in_array($transactionStatus, ['capture', 'settlement'])) {
+            $order->status = 'completed';
+        } elseif ($transactionStatus === 'pending') {
+            $order->status = 'pending';
+        } elseif (in_array($transactionStatus, ['deny', 'cancel', 'expire', 'failure'])) {
+            $order->status = 'failed';
         }
 
-        return view('confirmation', compact('order'));
+        $order->save();
+    } catch (\Exception $e) {
+        // Optional: log error
+        \Log::error('Midtrans transaction status error: ' . $e->getMessage());
+        return redirect()->route('home')->with('error', 'Failed to retrieve transaction status.');
     }
+
+    return view('confirmation', compact('order', 'transactionStatus'));
+}
 
     }  
 
