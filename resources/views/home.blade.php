@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-<div class="relative w-full main-page" style="margin: auto; max-margin: 150px; background: url('{{ asset('img/cover.jpg') }}') no-repeat center center/cover;">
+<div class="relative w-full main-page" style="margin: auto; max-margin: 150px; background: url('{{ asset('img/cover.png') }}') no-repeat center center/cover;">
     {{-- Overlay hitam transparan, mek agak ga ketok gtw knp --}}
     <div class="bg-white bg-opacity-30"></div>
     
@@ -9,7 +9,7 @@
     <div class="flex items-center justify-center pt-5 pb-5 lg:py-10">
         <div class="text-center px-4">
             <p class="tracking-wider m-3" style="line-height: 1.6; color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); font-family: 'Montserrat', sans-serif;">
-                <i>#Autumn Festival</i>
+                <i># Autumn Festival</i>
             </p>
             <h2 class="font-bold italic" style="font-size: 3.75rem; font-family: 'Playfair Display', serif; color: #ffffff; text-shadow: 1px 1px 3px rgba(153,123,82,0.42);">
                 Autumn Package Deals
@@ -17,7 +17,7 @@
             <p class="tracking-wider m-3" style="line-height: 1.6; color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); font-family: 'Montserrat', sans-serif;">
                 get your aromatic, woody, and musk comfort through the delightful candles
             </p>
-            <a href="{{ route('product') }}" class="btn btn-light m-4 px-5 p-2" style="letter-spacing: 1.5px;">
+            <a href="{{ route('product') }}" class="btn btn-light m-4 px-5 p-3" style="letter-spacing: 1.5px;">
                 SHOP NOW
             </a>
         </div>
