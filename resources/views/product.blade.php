@@ -94,7 +94,7 @@
         </div>
 
         <!-- Pagination controls -->
-        <div class="text-center p-3 d-flex justify-content-center align-items-center gap-3 paging">
+        <div class="text-center p-4 d-flex justify-content-center align-items-center gap-3 paging">
             <button id="prev-btn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm" disabled>&lt; Previous</button>
             <span id="page-indicator">1 / 1</span>
             <button id="next-btn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm">Next &gt;</button>

@@ -71,69 +71,149 @@
 </div>
 
 
-{{-- best seller --}}
-@php
-    $placeholder = [
-        [
-            'id' => 1,
-            'productName' => 'Lavender Essential Oil',
-            'description' => 'Calming yet aromatic Lavender essense. Best for sleep.',
-            'price' => 75000,
-            'image_url' => 'lavenderscentedcandle.jpeg',
-            'category_name' => 'Essential Oils'
-        ],
-        [
-            'id' => 5,
-            'productName' => 'Flake Soy Wax Melt',
-            'description' => 'Easier to melt soy based wax.',
-            'price' => 45000,
-            'image_url' => 'flakesoywaxmelt.jpeg',
-            'category_name' => 'Wax Melt'
-        ],
-        [
-            'id' => 8,
-            'productName' => 'Eucalyptus Bath Bomb',
-            'description' => 'Homemade eucalyptus bath bombs perfect for at-home wellness.',
-            'price' => 60000,
-            'image_url' => 'eucalyptusbathbomb.jpeg',
-            'category_name' => 'Bath Bombs'
-        ]
-    ];
-@endphp
-
 <div class="container-fluid py-5" style="background-color: #f8f4ee;">
     <div class="text-center mb-5">
-        <h2 style="font-size: 2.25rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">RECOMMENDATION</h2>
+        <h2 style="font-size: 2.25rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">
+            RECOMMENDATION
+        </h2>
     </div>
 
-    <div class="row justify-content-center">
-        @foreach ($placeholder as $item)
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="color: #5c3c1d;">
-                <div class="text-start h-100">
-                    <img src="{{ asset('productimages/'.$item['image_url']) }}" alt="Product" class="img-fluid mb-1" style="object-fit: cover; height: 240px; width: 100%;">
+    <div class="position-relative">
+        @php
+    $chunks = $products->chunk(4); // 4 produk per halaman
+@endphp
 
-                    <p class="text-muted mb-1" style="font-style: italic; font-size: 0.9rem;">{{ $item['category_name'] }}</p>
-                    <h6 class="mb-1 fw-bold" style="font-size: 1.1rem; font-family: 'Playfair Display'">{{ $item['productName'] }}</h6>
-                    <p class="text-muted mb-2" style="font-style: italic; font-size: 0.9rem; height: 70px;">
-                        {{ $item['description'] }}
-                    </p>
+<div class="recommendation-slider text-center">
+    <div id="recommendationPages">
+        @foreach ($chunks as $index => $chunk)
+            <div class="recommendation-page" style="{{ $index === 0 ? '' : 'display:none;' }}">
+                <div class="d-flex justify-content-center flex-wrap gap-4">
+                    @foreach ($chunk as $item)
+                        <a href="{{ route('product-detil.show', $item->product_id) }}" class="product-card">
+                            <div class="card-image-wrapper">
+                                <img src="{{ asset('productimages/'.$item->image_url) }}" alt="{{ $item->name }}">
+                            </div>
 
-                    <div class="d-flex justify-content-between" style="font-size: 0.95rem;">
-                        <span class="fw-bold">Rp. {{ number_format($item['price'], 0, ',', '.') }},-</span>
-                    </div>
-                        <a href="{{ route('product-detil.show', $item['id']) }}" class="btn w-100 mt-3" style="background-color: #5c3c1d; color: white; font-weight: 500;">
-                            SEE MORE
+                            <p class="product-category text-muted mb-1" style="font-style: italic; font-size: 0.9rem;">
+                                {{ $item->category->name ?? 'N/A' }}
+                            </p> 
+
+                            <h6 class="product-name mb-1 fw-bold" style="font-size: 1.1rem; font-family: 'Playfair Display'">
+                                {{ $item->name }}
+                            </h6>
+
+                            <p class="card-description text-muted mb-2">
+                                {{ $item->description }}
+                            </p>
+
+                            <div class="price-rate d-flex justify-content-between" style="font-size: 0.95rem;">
+                                <span class="product-price fw-bold">Rp. {{ number_format($item->price, 0, ',', '.') }},-</span>
+                            </div>
                         </a>
-                    </div>
+                    @endforeach
+                </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+        <button id="prevBtn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm">&lt; Previous</button>
+        <span id="pageIndicator">1 / {{ $chunks->count() }}</span>
+        <button id="nextBtn" class="btn btn-outline-secondary btn-outline-custom text-brown border-brown btn-sm">Next &gt;</button>
+    </div>
+</div>
+
+
+        {{-- Gradient overlay kiri-kanan --}}
+        <div style="position: absolute; top: 0; left: 0; bottom: 0; width: 50px; background: linear-gradient(to right, #f8f4ee, transparent); z-index: 1;"></div>
+        <div style="position: absolute; top: 0; right: 0; bottom: 0; width: 50px; background: linear-gradient(to left, #f8f4ee, transparent); z-index: 1;"></div>
     </div>
 </div>
 
 
 
 
+
+
 <style>
+    .paging {
+    background-color: #f8f4ee;
+    justify-content: center; /* Tengahin tombol */
+    padding: 1rem 0;
+}
+
+.text-brown {
+    color: #5c3c1d !important;
+}
+
+.border-brown {
+    border-color: #5c3c1d !important;
+}
+
+.btn-outline-custom {
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+    border-width: 1.5px;
+}
+
+.btn-outline-custom:hover {
+    color: #fff !important;
+    background-color: #5c3c1d !important;
+    border-color: #5c3c1d !important;
+}
+
+#pageIndicator {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #5c3c1d;
+}
+
+    .product-card {
+    display: block;
+    width: 250px;
+    border-radius: 12px;
+    background: white;
+    padding: 1rem;
+    color: #5c3c1d;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-description {
+    font-style: italic;
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* max 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2.8em;
+}
+
+
     .category-card {
     position: relative;
     overflow: hidden;
@@ -196,5 +276,33 @@
     }
 }
 </style>
+<script>
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.recommendation-page');
+    const pageIndicator = document.getElementById('pageIndicator');
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if (currentPage > 0) {
+            pages[currentPage].style.display = 'none';
+            currentPage--;
+            pages[currentPage].style.display = '';
+            updateIndicator();
+        }
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if (currentPage < pages.length - 1) {
+            pages[currentPage].style.display = 'none';
+            currentPage++;
+            pages[currentPage].style.display = '';
+            updateIndicator();
+        }
+    });
+
+    function updateIndicator() {
+        pageIndicator.textContent = `${currentPage + 1} / ${pages.length}`;
+    }
+</script>
+
 
 @endsection

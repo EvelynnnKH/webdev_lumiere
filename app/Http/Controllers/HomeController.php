@@ -12,7 +12,7 @@ class HomeController extends Controller
     //
     public function show(){
         return view('home', [
-            'products'=>Product::with(['category'])->get()
+            'products' => Product::with('category')->inRandomOrder()->limit(12)->get()
         ]);
     }
 }
