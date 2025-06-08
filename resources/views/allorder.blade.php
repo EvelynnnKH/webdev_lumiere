@@ -1,6 +1,31 @@
 @extends('base')
 
 @section('content')
+<style>
+    .btn-view {
+        background-color: #7c5126;
+        color:white;
+        border: none;
+        padding: 0.5rem 3rem;
+        border-radius: 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-view:hover {
+        background-color: #5c3c1d;
+        transform: translateY(-2px);
+        color:white;
+    }
+
+    .table-header th {
+        background-color: #f2e8df;
+        color: #38220f;
+        font-weight: 600;
+        padding: 0.75rem;
+        text-align: left;
+    }
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 
 <div class="container my-5">
@@ -8,15 +33,15 @@
     <div class="card shadow-sm border-0">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table align-middle">
+                <table class="table-header table align-middle">
                     <thead>
                         <tr style="background-color: #f8f4ef;">
-                            <th class="px-3 py-3">Order ID</th>
-                            <th class="px-3 py-3">User</th>
-                            <th class="px-3 py-3">Date</th>
-                            <th class="px-3 py-3">Total Price</th>
-                            <th class="px-3 py-3">Status</th>
-                            <th class="px-3 py-3 text-center">Details</th>
+                            <th class="px-3 py-3">ORDER ID</th>
+                            <th class="px-3 py-3">USER</th>
+                            <th class="px-3 py-3">DATE</th>
+                            <th class="px-3 py-3" style="text-align: right;">TOTAL PRICE</th>
+                            <th class="px-3 py-3 text-center">STATUS</th>
+                            <th class="px-3 py-3 text-center">DETAILS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,14 +50,17 @@
                             <td class="px-3 py-3">{{ $order->order_id }}</td>
                             <td class="px-3 py-3">{{ $order->user->name ?? 'N/A' }}</td>
                             <td class="px-3 py-3">{{ $order->created_at }}</td>
-                            <td class="px-3 py-3">Rp {{ number_format($order->total_price, 0, ',', '.') }},-</td>
-                            <td class="px-3 py-3">
+                            <td class="px-3 py-3" style="text-align: right;">Rp. {{ number_format($order->total_price, 0, ',', '.') }},-</td>
+                            <td class="text-center px-3 py-3">
                                 <span class="badge-custom {{ 'badge-' . strtolower($order->status) }}">
                                     {{ $order->status }}
                                 </span>
                             </td>
                             <td class="text-center px-3 py-3">
-                                <a href="{{ route('showOrderDetails', ['orderNumber' => $order['order_number']]) }}" class="btn btn-sm btn-brown">VIEW</a>
+                                <a href="{{ route('showOrderDetails', ['orderNumber' => $order['order_number']]) }}" class="btn-view btn btn-sm">
+                                    <i class="fas fa-eye me-1"></i>
+                                    VIEW
+                                </a>
                             </td>
                         </tr>
                         @empty
