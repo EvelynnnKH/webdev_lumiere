@@ -344,16 +344,16 @@ public function showAllOrderDetails($orderNumber)
             $order->save();
             return redirect($snapUrl);
 
-            return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
-                ->with('success', 'Order placed successfully!');
+            // return redirect()->route('order.confirmation', ['order_id' => $order->order_id])
+            //     ->with('success', 'Order placed successfully!');
     }
 
     public function showConfirmation($order_id)
 {
     $order = Orders::with('orderItems.product')->findOrFail($order_id);
-
+    $varorder = $order->user_id;
     // Verify the order belongs to the authenticated user
-    if ($order->user_id !== Auth::id()) {
+    if ((int) $varorder !== (int) Auth::id()) {
         abort(403);
     }
 
