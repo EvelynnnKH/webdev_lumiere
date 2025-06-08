@@ -18,7 +18,24 @@
         </div>
     @endif
     @section('content')
-    
+    <style>
+        
+    .add-to-cart-btn {
+        background-color: #7c5126;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #5c3c1d;
+        transform: translateY(-2px);
+        color:white;
+    }
+
+    </style>
     {{-- <div class="back-container">
         <a href="{{ url()->previous() }}" class="back-button" title="Back">
              ←
@@ -33,11 +50,15 @@
         </div>
 
         <div class="product-info">
-            <h1 class="product-name">{{ $product->name }}</h1>
-            <p class="product-price">Price: Rp. {{ number_format($product->price, 0, ',', '.') }},-</p>
-            <p class="product-category">Category: {{ $product->category->name ?? 'Uncategorized' }}</p>
-            <p class="product-stock">Stock: {{ $product->stock }}</p>
-            <p class="product-description">Description: {{ $product->description }}</p>
+            <p class="product-category text-muted mb-1" style="font-size: 18px; font-style: italic;">{{ $product->category->name ?? 'Uncategorized' }}</p> 
+            <h1 class="product-name mb-1 fw-bold" style="color:#5c3c1d; font-size:30px; font-family: 'Playfair Display'">{{ $product->name }}</h1>
+            <p class="card-description text-muted mb-2" style="font-style: italic; height: 70px;">
+                {{ $product->description }}
+            </p>
+            <div class="price-rate d-flex justify-content-between mb-2" style="font-size: 22px;">
+                <span class="product-price fw-bold" style="font-size: 30px;">Rp. {{ number_format($product->price, 0, ',', '.') }},-</span>
+            </div>
+            <p class="product-stock mt-2">Stock: {{ $product->stock }}</p>
 
             <div class="quantity-selector">
                 <button class="qty-btn" onclick="decreaseQty()">-</button>
