@@ -16,6 +16,21 @@
     text-align: center;
     }
 
+    .continue-btn {
+        background-color: #7c5126;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .continue-btn:hover {
+        background-color: #5c3c1d;
+        transform: translateY(-2px);
+        color:white;
+    }
+
     .remove-btn {
         background-color: #c82b2b;
         border: none;
@@ -76,7 +91,7 @@
                          class="me-3">
                     <div>
                         <div class="fw-semibold">{{ $item->product->name }}</div>
-                        <div class="text-muted small d-md-none mt-1">Rp {{ number_format($price, 0, ',', '.') }}</div>
+                        <div class="text-muted small d-md-none mt-1">Rp. {{ number_format($price, 0, ',', '.') }}</div>
                     </div>
                 </div>
 
@@ -116,7 +131,7 @@
     @else
         <p class="text-center" style="padding-bottom: 50px; font-weight: 200; font-size: 16px; font-family: 'Montserrat', sans-serif; color: #5c3c1d;">You have no items in your cart.</p>
         <div class="center-container">
-            <a href="{{ route('product') }}" class="btn" style="font-size: 16px; font-family: 'Montserrat', sans-serif; background-color: #5c3c1d; color: white; padding: 20px 130px 20px 130px;">CONTINUE SHOPPING</a>
+            <a href="{{ route('product') }}" class="continue-btn btn" style="font-size: 16px; font-family: 'Montserrat', sans-serif; color: white; padding: 20px 130px 20px 130px;">CONTINUE SHOPPING</a>
         </div>
     @endif
 </div>
