@@ -103,7 +103,7 @@
 
 <div class="container-fluid py-5" style="background-color: #f8f4ee;">
     <div class="text-center mb-5">
-        <h2 style="font-size: 2.75rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">RECOMMENDATION</h2>
+        <h2 style="font-size: 2.25rem; font-family: 'Playfair Display'; font-weight: 400; color: #5c3c1d;">RECOMMENDATION</h2>
     </div>
 
     <div class="row justify-content-center">
