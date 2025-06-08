@@ -36,48 +36,48 @@
             <div class="category-nav d-flex justify-content-center gap-4 py-2 shadow-sm bg-white sticky-top" style="top: 90px; z-index: 10; font-family: 'Montserrat', sans-serif;">
             <!-- OILS -->
             <div class="dropdown">
-                <button class="btn btn-link dropdown-toggle text-dark text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-link dropdown-toggle text-decoration-none" style="color:#5c3c1d;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     OILS
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('category.show', 8) }}">Essential Oils</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 8) }}">Essential Oils</a></li>
                 </ul>
             </div>
 
             <!-- CANDLE -->
             <div class="dropdown">
-                <button class="btn btn-link dropdown-toggle text-dark text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-link dropdown-toggle text-decoration-none" style="color:#5c3c1d;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     CANDLE
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('category.show', 1) }}">Scented Candle</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 4) }}">Decorative Candle</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 7) }}">Seasonal Candle</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 11) }}">Unscented Candle</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 1) }}">Scented Candle</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 4) }}">Decorative Candle</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 7) }}">Seasonal Candle</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 11) }}">Unscented Candle</a></li>
                 </ul>
             </div>
 
             <!-- WAX & BATH -->
             <div class="dropdown">
-                <button class="btn btn-link dropdown-toggle text-dark text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-link dropdown-toggle text-decoration-none" style="color:#5c3c1d;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     WAX & BATH
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('category.show', 3) }}">Wax Melt</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 5) }}">Bath Bombs</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 12) }}">Handmade Soaps</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 3) }}">Wax Melt</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 5) }}">Bath Bombs</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 12) }}">Handmade Soaps</a></li>
                 </ul>
             </div>
 
             <!-- MICELLANOUS -->
             <div class="dropdown">
-                <button class="btn btn-link dropdown-toggle text-dark text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-link dropdown-toggle text-decoration-none" style="color:#5c3c1d;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     MISCELLANEOUS
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('category.show', 2) }}">Candle Accessories</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 9) }}">Candle Making Kit</a></li>
-                    <li><a class="dropdown-item" href="{{ route('category.show', 13) }}">Gift Boxes & Sets</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 2) }}">Candle Accessories</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 9) }}">Candle Making Kit</a></li>
+                    <li><a class="dropdown-item" style="color:#5c3c1d;" href="{{ route('category.show', 13) }}">Gift Boxes & Sets</a></li>
                 </ul>
             </div>
         </div>

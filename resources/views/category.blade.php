@@ -27,9 +27,9 @@
                 ];
             @endphp
 
-            <h1>{{ $category->name }}</h1>
+            <h1 style="color: #5c3c1d;">{{ $category->name }}</h1>
             @if (array_key_exists($category->name, $descriptions))
-                <h3 class="category-description">{{ $descriptions[$category->name] }}</h3>
+                <h3 class="category-description" style="color: #5c3c1d;">{{ $descriptions[$category->name] }}</h3>
             @endif
             <div class="product-grid justify-content-center">
                 @forelse ($products as $p)
