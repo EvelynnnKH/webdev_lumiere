@@ -1,5 +1,6 @@
 @extends('base')
 
+@section('content')
 <style>
     .page-title:after {
         left: 46.5%;
@@ -16,11 +17,26 @@
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+
+    .place-order-btn {
+        background-color: #7c5126;
+        color:white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .place-order-btn:hover {
+        background-color: #5c3c1d;
+        transform: translateY(-2px);
+        color:white;
+    }
 </style>
 
-@section('content')
-<div class="container py-5" style="font-family: 'Playfair Display';">
-    <h2 class="mb-5 text-center fw-bold pb-2 page-title">Checkout</h2>
+<div class="container py-5" style="font-family: 'Montserrat', sans-serif; color: #5c3c1d">
+    <h2 class="mb-4 text-center pb-3" style="font-weight: 300; color: #5c3c1d;">CHECKOUT</h2>
 
     <div class="row">
         <!-- Customer Information -->
@@ -119,10 +135,10 @@
                     @foreach ($cart->cartItems as $item)
                     <div class="d-flex justify-content-between mb-3">
                         <div>
-                            <span class="fw-semibold">{{ $item->product->name }}</span>
+                            <span class="fw-semibold" style="font-family: 'Playfair Display';">{{ $item->product->name }}</span><BR>
                             <span class="text-muted">x{{ $item->quantity }}</span>
                         </div>
-                        <div>Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</div>
+                        <div>Rp. {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }},-</div>
                     </div>
                     @endforeach
                 </div>
@@ -131,28 +147,28 @@
                 <div class="border-top pt-3">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Subtotal</span>
-                        <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+                        <span>Rp. {{ number_format($total, 0, ',', '.') }},-</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Tax (10%)</span>
-                        <span>Rp {{ number_format($total * 0.1, 0, ',', '.') }}</span>
+                        <span>Rp. {{ number_format($total * 0.1, 0, ',', '.') }},-</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Shipping</span>
-                        <span>Rp {{ number_format(20000, 0, ',', '.') }}</span>
+                        <span>Rp. {{ number_format(20000, 0, ',', '.') }},-</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Admin Fee</span>
-                        <span>Rp {{ number_format(5000, 0, ',', '.') }}</span>
+                        <span>Rp. {{ number_format(5000, 0, ',', '.') }},-</span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold mt-3 pt-2 fs-5">
                         <span>Total</span>
-                        <span>Rp {{ number_format($total + ($total * 0.1) + 20000 + 5000, 0, ',', '.') }}</span>
+                        <span>Rp. {{ number_format($total + ($total * 0.1) + 20000 + 5000, 0, ',', '.') }},-</span>
                     </div>
                 </div>
                 
                 <!-- Place Order Button -->
-                <button type="submit" form="checkoutForm" class="btn btn-dark w-100 mt-4 py-2">
+                <button type="submit" form="checkoutForm" class="place-order-btn btn w-100 mt-4 padding: 15px 70px 15px 70px;">
                     PLACE ORDER
                 </button>
             </div>
