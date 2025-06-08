@@ -106,7 +106,7 @@
 </style>
 
 <div class="order-details-page py-5">
-        <a href="{{ route('order.show') }}" class="btn back-order-history-btn">
+        <a href="{{ route('orders.show') }}" class="btn back-order-history-btn">
             <i class="fas fa-arrow-left me-2"></i> Back to Order History
         </a>
         <h2 class="mb-4 mt-2 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">ORDER DETAILS</h2>
