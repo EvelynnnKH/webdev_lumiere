@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'show']);
+
+Route::get('/home', [HomeController::class, 'show'])
+    ->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
