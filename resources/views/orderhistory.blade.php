@@ -4,7 +4,8 @@
 <style>
     body {
         background-color: #f8f4ee;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Monserrat', sans-serif;
+        color: #5c3c1d;
     }
     
     .order-history-container {
@@ -61,18 +62,14 @@
         font-size: 1.1rem;
     }
 
+    .order-badge {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+    }
+
     .order-date {
         opacity: 0.9;
         font-size: 0.9rem;
-    }
-
-    .order-status {
-        background-color: #28a745;
-        color: white;
-        padding: 0.35rem 0.75rem;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 500;
     }
 
     .order-card-body {
@@ -155,7 +152,7 @@
         border: none;
         color: white;
         padding: 0.5rem 1.25rem;
-        border-radius: 50px;
+        border-radius: 40px;
         font-weight: 500;
         transition: all 0.3s ease;
         display: inline-flex;
@@ -163,7 +160,7 @@
     }
 
     .view-details-btn:hover {
-        background-color: #c79c6c;
+        background-color: #b58855;
         color: white;
         transform: translateY(-2px);
     }
@@ -193,10 +190,10 @@
     }
 
     .back-home-btn {
-        background-color: #b1a59b;
+        background-color: #c7baaf;
         border: none;
         padding: 0.75rem 1.5rem;
-        border-radius: 50px;
+        border-radius: 40px;
         font-weight: 500;
         transition: all 0.3s ease;
     }
@@ -204,6 +201,7 @@
     .back-home-btn:hover {
         background-color: #847465;
         transform: translateY(-2px);
+        color: white;
     }
 
     .more-items {
@@ -214,8 +212,11 @@
     }
 </style>
 
-<div class="order-history-container p-5">
-    <h1 class="page-title" style="font-family: 'Playfair Display';">Your Order History</h1>
+<div class="order-history-container py-5">
+    <a href="{{ url('home') }}" class="btn back-home-btn">
+                <i class="fas fa-arrow-left me-2"></i> Back to Home
+    </a>
+    <h2 class="mb-4 mt-2 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">YOUR ORDER HISTORY</h2>
 
     @if(count($orders) === 0)
         <div class="empty-state">
@@ -224,9 +225,6 @@
             </div>
             <h3>No Orders Yet</h3>
             <p class="empty-text">You haven't placed any orders yet. Start shopping to see your order history here.</p>
-            <a href="{{ url('home') }}" class="btn back-home-btn">
-                <i class="fas fa-home me-2"></i> Back to Home
-            </a>
         </div>
     @else
         @foreach($orders as $order)
@@ -236,7 +234,7 @@
                     <span class="order-number">Order #{{ $order->order_number }}</span>
                     <span class="order-date ms-2">{{ $order->order_date }}</span>
                 </div>
-                <span class="order-status">{{ ucfirst($order->status) }}</span>
+                <span class="badge order-badge bg-success">{{ ucfirst($order->status) }}</span>
             </div>
             
             <div class="order-card-body">
@@ -246,29 +244,29 @@
                 
                 <div class="order-summary">
                     <div class="summary-row">
-                        <span class="summary-label">Items:</span>
+                        <span class="summary-label">Total Item:</span>
                         <span class="summary-value">{{ count($order->items) }} products</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Order Total:</span>
-                        <span class="summary-value order-total">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                        <span class="summary-value order-total">Rp. {{ number_format($order->total_price, 0, ',', '.') }},-</span>
                     </div>
                 </div>
                 
                 <table class="products-table">
-                    <thead>
+                    <thead style=" color: #5c3c1d; font-weight: 200; font-size: 15px; font-family: 'Montserrat', sans-serif;">
                         <tr>
-                            <th>Product</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-end">Price</th>
+                            <th>PRODUCT</th>
+                            <th class="text-center">QUANTITY</th>
+                            <th class="text-end">PRICE</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($order->items->take(3) as $item)
                             <tr>
-                                <td class="product-name">{{ $item->product->name }}</td>
-                                <td class="product-qty">{{ $item->quantity }}</td>
-                                <td class="product-price">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                                <td class="product-name" style="font-family: 'Playfair Display'; font-weight:bold;">{{ $item->product->name }}</td>
+                                <td class="product-qty" style="color: #5c3c1d;">{{ $item->quantity }}</td>
+                                <td class="product-price">Rp. {{ number_format($item->price, 0, ',', '.') }},-</td>
                             </tr>
                         @endforeach
                         @if($order->items->count() > 3)
@@ -288,12 +286,6 @@
             </div>
         </div>
         @endforeach
-
-        <div class="text-center mt-4">
-            <a href="{{ url('home') }}" class="btn back-home-btn">
-                <i class="fas fa-home me-2"></i> Back to Home
-            </a>
-        </div>
     @endif
 </div>
 @endsection
