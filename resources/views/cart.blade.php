@@ -7,6 +7,7 @@
     </div>
 @endif
 
+@section('content')
 <style>
     main {
         background-color: #f8f4ee;
@@ -14,14 +15,43 @@
     .center-container {
     text-align: center;
     }
+
+    .remove-btn {
+        background-color: #e73737;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .remove-btn:hover {
+        background-color: #970505;
+        transform: translateY(-2px);
+        color:white;
+    }
+
+    .checkout-btn {
+        background-color: #7c5126;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .checkout-btn:hover {
+        background-color: #5c3c1d;
+        transform: translateY(-2px);
+        color:white;
+    }
 </style>
 
-@section('content')
 <div class="container py-5" style="font-family: 'Playfair Display'; color: #5c3c1d;">
-    <h2 class="mb-4 text-center pb-2" style="font-weight: 300; color: #5c3c1d;">CART</h2>
+    <h2 class="mb-4 text-center pb-3" style="font-weight: 300; color: #5c3c1d;">CART</h2>
 
     @if ($cart && $cart->cartItems->count() > 0)
-        <div class="d-none d-md-flex border-bottom pb-3" style=" color: #5c3c1d; font-weight: 200; font-size: 14px; font-family: 'Montserrat', sans-serif;">
+        <div class="d-none d-md-flex border-bottom pb-3" style=" color: #5c3c1d; font-weight: bold; font-size: 15px; font-family: 'Montserrat', sans-serif;">
             <div class="col-md-5">PRODUCT</div>
             <div class="col-md-2 text-center">QUANTITY</div>
             <div class="col-md-2 text-end">PRICE</div>
@@ -68,7 +98,7 @@
                     <form action="{{ route('cart.removeItem', ['id' => $item->cart_item_id]) }}" method="POST" onsubmit="return confirm('Delete this item?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" style="padding: 10px 20px 10px 20px">Remove</button>
+                        <button type="submit" class="remove-btn btn btn-sm btn-danger" style="padding: 10px 20px 10px 20px">Remove</button>
                     </form>
                 </div>
             </div>
@@ -80,9 +110,7 @@
             <form action="{{ route('checkout') }}" method="GET">
                 @csrf
                 <input type="hidden" name="cart_id" value="{{ $cart->cart_id }}">
-                <button type="submit" class="btn btn-lg" style="background-color:#5c3c1d; color: white; font-size: 14px; font-family: 'Montserrat', sans-serif; border-radius: 5px; padding: 15px 70px 15px 70px;"
-                        onmouseover="this.style.backgroundColor='#3d2714';"
-                        onmouseout="this.style.backgroundColor='#5c3c1d';">C H E C K O U T</button>
+                <button type="submit" class="checkout-btn btn btn-lg" style="color: white; font-size: 14px; font-family: 'Montserrat', sans-serif; border-radius: 5px; padding: 15px 70px 15px 70px;">C H E C K O U T</button>
             </form>
         </div>
     @else
